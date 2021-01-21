@@ -1,21 +1,45 @@
 //Variables
+
+
 var overlay = $("#overlay"),
         fab = $(".fab"),
-     cancel = $("#cancel"),
-     addsubject = $(".addsubject")
-     submit = $("#submit");
+ addsubject = $(".addsubject"),
+     submit = $("#submit"),
+     done=$(".done"),
+     cancelbutton = $(".cancel");
 
 //fab click
-fab.on('click', openFAB);
+
+done.on('click', closeFAB);
 addsubject.on('click', openFAB);
 overlay.on('click', closeFAB);
-cancel.on('click', closeFAB);
+cancelbutton.on('click', closeFAB);
+
+function addsubject(){
+  openFAB;
+}
 
 function openFAB(event) {
+
+  window.currentTable = this.id;
+
+  console.log("Current button id " + currentTable);
+
+
   if (event) event.preventDefault();
   fab.addClass('active');
   overlay.addClass('dark-overlay');
 
+}
+
+function getValue(){
+    // var course = document.getElementById("coursenameinput").value;
+    // var course_code = document.getElementById("coursecodeinput").value;
+    // var credit_hour = document.getElementById("credithourinput").value;
+
+    // alert(course,course_code,credit_hour);
+    done.on('click', closeFAB);
+  
 }
 
 function closeFAB(event) {
