@@ -6,12 +6,15 @@ var overlay = $("#overlay"),
  addsubject = $(".addsubject"),
      submit = $("#submit"),
      done=$(".done"),
+    //  editmenu=$(".editmenu")
      cancelbutton = $(".cancel");
 
 //fab click
 
 done.on('click', closeFAB);
 addsubject.on('click', openFAB);
+// editmenu.on('click', openFAB);
+
 overlay.on('click', closeFAB);
 cancelbutton.on('click', closeFAB);
 
@@ -19,14 +22,14 @@ function addsubject(){
   openFAB;
 }
 
-function openFAB(event) {
+function openFAB() {
 
   window.currentTable = this.id;
 
   console.log("Current button id " + currentTable);
 
 
-  if (event) event.preventDefault();
+  
   fab.addClass('active');
   overlay.addClass('dark-overlay');
 

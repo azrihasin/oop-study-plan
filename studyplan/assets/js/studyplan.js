@@ -67,6 +67,7 @@ if(length==0){
     var table = document.createElement("TABLE");
     var addbtn = document.createElement("DIV");
     var editbtn = document.createElement("DIV");
+    var tableNameArea = document.createElement("DIV");
     var tablename = document.createElement("TEXTAREA");
    
     var div = document.createElement("div");
@@ -77,6 +78,11 @@ if(length==0){
     tablename.appendChild(t);
     tablename.setAttribute("id",tableNameId);
     tablename.readOnly = true;
+    tablename.style.display="inline-block";
+    tablename.style.resize="none";
+    tableNameArea.className = "tablenamearea";
+
+    tableNameArea.appendChild(tablename);
 
 //EDIT BUTTON FOR TABLENAME
 
@@ -85,11 +91,14 @@ editButtonIcon="editbuttonicon-"+length;
 
 editbtn.style.width = "56px";
 editbtn.style.height = "56px";
+editbtn.style.float = "right";
+editbtn.style.paddingTop = "5px";
 
 editbtn.innerHTML = `<button id="${editButtonId}" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" onclick="changeState(this.id)">
 <i id="${editButtonIcon}" class="material-icons">edit</i>
 </button>`
 
+tableNameArea.appendChild(editbtn);
 
 
 
@@ -115,8 +124,7 @@ editbtn.innerHTML = `<button id="${editButtonId}" class="mdl-button mdl-js-butto
     table.setAttribute("id","table"+length);
 
 //CREATE DIV FOR TABLE AND APPEND TABLE TO DIV
-    div.appendChild(tablename);
-    div.appendChild(editbtn);
+    div.appendChild(tableNameArea);
     div.appendChild(table);
     div.appendChild(addbtn);
     div.className = "card";
@@ -152,12 +160,14 @@ function getValue(){
 
    const rowCount = document.getElementById(tableId).rows.length;
   
+   //CHECK SEM NEM
+
    
 
    console.log("Table length: "+rowCount);
 
     var s_id =  window.currentTable;
-    var s_name = "Table Name";
+    var s_name = window.sem[window.currentTable].sem_name;
     var c_id = rowCount;
     var c_name = course;
     var c_code = course_code;
@@ -169,7 +179,7 @@ function getValue(){
     var listId = "list"+subjectId; 
     var iconId = "icon"+subjectId;
     var ulId =  "ul"+subjectId;
-    var editId =  "edit"+subjectId;
+    var editId =  "edit_"+subjectId;
     var deleteId =  "delete"+subjectId;
 
     
@@ -195,8 +205,8 @@ function getValue(){
               </button>
 
               <ul id='${ulId}' class="mdl-menu mdl-js-menu" for="${listId}">
-                <li id='${editId}'class="mdl-menu__item">Edit</li>                          
-                <li id='${deleteId}'class="mdl-menu__item">Delete</li>
+                <li id='${editId}'class="editmenu mdl-menu__item" onclick="editsubject(this.id)">Edit</li>                          
+                <li id='${deleteId}'class="deletemenu mdl-menu__item" onclick="">Delete</li>
               </ul>
               
               </td>
@@ -274,10 +284,9 @@ function changeState(getid) {
         var name = fields[0];
         var num = fields[1];
     
-        var getTableId = "tablename"+num;
-    
-        var getTable=document.getElementById(getTableId);
+        var getTableId = "tablename"+num;   
 
+        var getTable=document.getElementById(getTableId);
         getTable.readOnly=true;
         getTable.style.border = "none";
         getTable.style.overflow = "hidden";
@@ -285,20 +294,148 @@ function changeState(getid) {
         getTable.style.backgroundColor = "transparent";
         
     
-        var doneEditName = "editbuttonid-"+num;
-    
-        var doneEdit= document.getElementById(getid);
-    
-     
+        var doneEditName = "editbuttonid-"+num;    
+        var doneEdit= document.getElementById(getid);       
         var editButtonIcon="editbuttonicon-"+num;
     
-        var edit= document.getElementById(editButtonIcon);
- 
+        var edit= document.getElementById(editButtonIcon); 
         edit.textContent="edit";
+
+
+
+      console.log(getTable.value);
+
+      window.sem[num].sem_name = getTable.value;
+
+      console.log(window.sem[num]);
+
+        for(i=0;i<window.subject[num].length;i++){
+            window.subject[num][i].sem_name = getTable.value;
+
+            console.log(window.subject[getid][i].sem_name);
+            
+        }
+
+        console.log("Sem name" + window.sem[num].sem_name);
     
     }
 
 }
+
+function editsubject(geteditid){
+
+   openFAB();
+
+    var editElement = document.getElementById(geteditid);
+
+    var fields = geteditid.split('_');
+    var name = fields[0];
+    var semnum = fields[1];
+    var num = fields[2];
+
+    console.log(fields);
+    console.log(semnum);
+    console.log(num);
+    console.log(window.subject[semnum][num-1]);
+
+   
+        console.log(document.getElementById(coursenameinput));
+
+         document.getElementById("coursenameinput").value= window.subject[semnum][num-1].course;
+         document.getElementById("coursecodeinput").value = window.subject[semnum][num-1].course_code;
+         document.getElementById("credithourinput").value = window.subject[semnum][num-1].credit_hour;
+  
+
+         var createButtonId = `doneeditsubject('${"variable_"+semnum+"_"+num}');`;
+   
+var getButton = document.getElementById("donefabbutton");
+getButton.setAttribute( "onClick", createButtonId );
+    
+}
+
+function doneeditsubject(geteditid){
+
+  
+
+    console.log(geteditid)
+
+    var fields = geteditid.split('_');
+    var name = fields[0];
+    var semnum = fields[1];
+    var num = fields[2];
+
+    var getTableId = "table"+semnum;
+
+    var course = document.getElementById("coursenameinput").value;
+    var course_code = document.getElementById("coursecodeinput").value;
+    var credit_hour = document.getElementById("credithourinput").value;
+
+    console.log(course);
+    console.log(course_code);
+    console.log(credit_hour);
+
+    console.log(semnum);
+    console.log(num);
+
+    console.log(window.subject[semnum][num-1].course);
+
+    window.subject[semnum][num-1].course = course.toString() ;
+    window.subject[semnum][num-1].course_code = course_code.toString();
+    window.subject[semnum][num-1].credit_hour =  credit_hour.toString() ;
+
+    var as = document.getElementById(getTableId);
+
+
+
+    var subjectId = semnum+"_"+num;
+    var buttonId = "button"+subjectId;
+    var listId = "list"+subjectId; 
+    var iconId = "icon"+subjectId;
+    var ulId =  "ul"+subjectId;
+    var editId =  "edit_"+subjectId;
+    var deleteId =  "delete"+subjectId;
+
+    
+        var trs = as.getElementsByTagName("tr")[num];
+
+        trs.innerHTML = `
+                <td><input type="checkbox" name="  " id=${subjectId} value="false"></td>
+                <td>${course_code}</td>
+                <td>${course}</td>
+                <td>${credit_hour}</td>
+                <td id=${buttonId}>
+                
+                <button id="${listId}" class="mdl-button mdl-js-button mdl-button--icon">
+                    <p id='${iconId}' class="material-icons">more_vert</p>
+              </button>
+
+              <ul id='${ulId}' class="mdl-menu mdl-js-menu" for="${listId}">
+                <li id='${editId}'class="editmenu mdl-menu__item" onclick="editsubject(this.id)">Edit</li>                          
+                <li id='${deleteId}'class="deletemenu mdl-menu__item" onclick="">Delete</li>
+              </ul>
+              
+              </td>
+              `
+
+              var button = document.getElementById(listId);
+              componentHandler.upgradeElement(button);
+
+              var icon = document.getElementById(iconId);
+              componentHandler.upgradeElement(icon);
+
+              var ul = document.getElementById(ulId);
+              componentHandler.upgradeElement(ul);
+
+              var editsub = document.getElementById(editId);
+              componentHandler.upgradeElement(editsub);
+
+              var deletesub = document.getElementById(editId);
+              componentHandler.upgradeElement(deletesub);
+
+              var getButton = document.getElementById("donefabbutton");
+                getButton.setAttribute( "onClick", "javascript:getValue();");
+    }
+
 
 
 
