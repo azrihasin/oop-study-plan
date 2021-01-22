@@ -86,8 +86,8 @@ editButtonIcon="editbuttonicon-"+length;
 editbtn.style.width = "56px";
 editbtn.style.height = "56px";
 
-editbtn.innerHTML = `<button id="${editButtonId}" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" onclick="edittablename(this.id)">
-<i class="material-icons">edit</i>
+editbtn.innerHTML = `<button id="${editButtonId}" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" onclick="changeState(this.id)">
+<i id="${editButtonIcon}" class="material-icons">edit</i>
 </button>`
 
 
@@ -232,23 +232,75 @@ document.getElementById("check").onclick = function(){
 }
 
 
-function edittablename(getid){
+var states = ["EDIT","DONE"], // your possible states
+current_state = 0; // your flag
 
-    console.log(getid);
+function changeState(getid) {
+    current_state=!current_state; // switch
+    document.getElementById(getid).value=states[current_state?1:0]; // write your state
 
-    var fields = getid.split('-');
-    var name = fields[0];
-    var num = fields[1];
+    console.log(current_state);
 
-    var getTableId = "tablename"+num;
-    document.getElementById(getTableId).removeAttribute('readonly');
+    if(current_state==1){
+     
 
-    var doneEditName = "doneeditname"+num;
+        var fields = getid.split('-');
+        var name = fields[0];
+        var num = fields[1];
+    
+        var getTableId = "tablename"+num;
+        var getTable= document.getElementById(getTableId);
 
-    var doneEdit= document.getElementById(getid);
-    doneEdit.innerHTML = `<button id="${doneEditName}" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" onclick="edittablename(this.id)">
-<i class="material-icons">done</i>
-</button>`
+        getTable.removeAttribute('readonly');
+        getTable.style.border = "#999 solid 1px";
+        getTable.style.borderRadius = "5px";
+        getTable.style.backgroundColor = "white";
+        getTable.style.overflow = "hidden";
+        getTable.style.resize = "none";
+        
+        var editButtonIcon="editbuttonicon-"+num;
+    
+        var edit= document.getElementById(editButtonIcon);
+
+        console.log(edit);
+ 
+        edit.textContent="done";
+    
+
+    }else{
+    
+
+        var fields = getid.split('-');
+        var name = fields[0];
+        var num = fields[1];
+    
+        var getTableId = "tablename"+num;
+    
+        var getTable=document.getElementById(getTableId);
+
+        getTable.readOnly=true;
+        getTable.style.border = "none";
+        getTable.style.overflow = "hidden";
+        getTable.style.resize = "none";
+        getTable.style.backgroundColor = "transparent";
+        
+    
+        var doneEditName = "editbuttonid-"+num;
+    
+        var doneEdit= document.getElementById(getid);
+    
+     
+        var editButtonIcon="editbuttonicon-"+num;
+    
+        var edit= document.getElementById(editButtonIcon);
+ 
+        edit.textContent="edit";
+    
+    }
+
 }
+
+
+
 
 
