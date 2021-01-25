@@ -53,7 +53,7 @@ if(length==0){
 if(length==0){
    subject[0]=[];
 }else{
-    subject.push([[]]);
+    subject.push([]);
 }
     
 
@@ -140,8 +140,53 @@ tableNameArea.appendChild(editbtn);
     div1.parentNode.insertBefore(tablespace.firstChild, div1.nextSibling);
    
     var upgreadedEditBtn = document.getElementById(editButtonId);
-componentHandler.upgradeElement(upgreadedEditBtn);
+    componentHandler.upgradeElement(upgreadedEditBtn);
+
+//SEM PICKER LIST
+
+    var selectlist = document.getElementById("semoption");
+
+
+    tablepick = "Table "+length;
+
+    var li = document.createElement('option');
+      li.innerHTML = `${window.sem[length].sem_name}`
+
+      selectlist.appendChild(li);     
+      
+      
+//SELECT OPTION STATE CURRENT TABLE
+
+var stateoption = document.getElementById(length);
+    
+stateoption.onclick = function(){
+
+    var opts = document.getElementById("semoption").options;
+
+    
+    for(var i = 0; i < opts.length; i++) {
+    if(opts[i].innerText == window.sem[length].sem_name ) {
+
+        console.log(window.sem[length].sem_name);
+
+        
+       opts[i].selected = "true";
+
+        break;
+    }
 }
+
+window.currentTable = this.id;
+
+console.log("Current button id " + currentTable);
+openFAB();
+}
+
+    
+}
+
+
+
 
 function getValue(){
 
@@ -154,9 +199,40 @@ function getValue(){
 
    //CREATE ALL VARIABLES
 
-   tableId="table"+window.currentTable;
+
+
+    var tableId="table"+window.currentTable;
+
+    var createIdForRow;
 
    console.log(tableId);
+
+   console.log("Table length for debug:"+document.getElementById(tableId).rows.length);
+
+   if(document.getElementById(tableId).rows.length==1){
+
+
+
+    window.createIdForRow = 0;
+ 
+
+   
+    
+    }
+    else{
+        getLastId = window.subject[window.currentTable][ window.subject[window.currentTable].length-1].course_id;
+
+        window.createIdForRow = (parseInt(getLastId) )+1;
+    }
+
+
+   console.log(window.subject[window.currentTable]);
+
+   console.log("CHECKKKKKK:"+window.createIdForRow);
+
+
+   
+
 
    const rowCount = document.getElementById(tableId).rows.length;
   
@@ -168,7 +244,7 @@ function getValue(){
 
     var s_id =  window.currentTable;
     var s_name = window.sem[window.currentTable].sem_name;
-    var c_id = rowCount;
+    var c_id = window.createIdForRow;
     var c_name = course;
     var c_code = course_code;
     var c_hour = credit_hour;
@@ -187,9 +263,6 @@ function getValue(){
 
     window.subject[window.currentTable].push(new Subject(s_id,s_name,c_id,c_name,c_code,c_hour,taken))
 
-    console.log("Current table :"+currentTable);
-
-    console.log(window.subject[window.currentTable][rowCount-1].course);
 
     var newRow = document.getElementById(tableId).insertRow();
       // newRow = "<td>New row text</td><td>New row 2nd cell</td>"; <-- won't work
@@ -241,11 +314,12 @@ document.getElementById("check").onclick = function(){
     
 }
 
-
 var states = ["EDIT","DONE"], // your possible states
 current_state = 0; // your flag
 
 function changeState(getid) {
+
+    
     current_state=!current_state; // switch
     document.getElementById(getid).value=states[current_state?1:0]; // write your state
 
@@ -257,6 +331,8 @@ function changeState(getid) {
         var fields = getid.split('-');
         var name = fields[0];
         var num = fields[1];
+
+        var before = window.sem[num].sem_name;
     
         var getTableId = "tablename"+num;
         var getTable= document.getElementById(getTableId);
@@ -280,9 +356,12 @@ function changeState(getid) {
     }else{
     
 
+
         var fields = getid.split('-');
         var name = fields[0];
         var num = fields[1];
+
+        var before = window.sem[num].sem_name;
     
         var getTableId = "tablename"+num;   
 
@@ -312,13 +391,26 @@ function changeState(getid) {
         for(i=0;i<window.subject[num].length;i++){
             window.subject[num][i].sem_name = getTable.value;
 
-            console.log(window.subject[getid][i].sem_name);
+            // console.log(window.subject[getid][i].sem_name);
             
         }
 
         console.log("Sem name" + window.sem[num].sem_name);
+
+        var opts = document.getElementById("semoption").options;
+        for(var i = 0; i < opts.length; i++) {
+        if(opts[i].innerText == before ) {
+
+           opts[i].innerText = window.sem[num].sem_name;
+
+            break;
+        }
     
     }
+
+
+   
+}
 
 }
 
@@ -336,14 +428,13 @@ function editsubject(geteditid){
     console.log(fields);
     console.log(semnum);
     console.log(num);
-    console.log(window.subject[semnum][num-1]);
-
+    console.log("See subject :" + window.subject[semnum][num].course);
+    console.log(window.subject[semnum]);
    
-        console.log(document.getElementById(coursenameinput));
 
-         document.getElementById("coursenameinput").value= window.subject[semnum][num-1].course;
-         document.getElementById("coursecodeinput").value = window.subject[semnum][num-1].course_code;
-         document.getElementById("credithourinput").value = window.subject[semnum][num-1].credit_hour;
+         document.getElementById("coursenameinput").value= window.subject[semnum][num].course;
+         document.getElementById("coursecodeinput").value = window.subject[semnum][num].course_code;
+         document.getElementById("credithourinput").value = window.subject[semnum][num].credit_hour;
   
 
          var createButtonId = `doneeditsubject('${"variable_"+semnum+"_"+num}');`;
@@ -370,6 +461,8 @@ function doneeditsubject(geteditid){
     var course_code = document.getElementById("coursecodeinput").value;
     var credit_hour = document.getElementById("credithourinput").value;
 
+    var option_sem = document.getElementById("semoption").value;
+
     console.log(course);
     console.log(course_code);
     console.log(credit_hour);
@@ -377,11 +470,11 @@ function doneeditsubject(geteditid){
     console.log(semnum);
     console.log(num);
 
-    console.log(window.subject[semnum][num-1].course);
+    console.log(window.subject[semnum][num].course);
 
-    window.subject[semnum][num-1].course = course.toString() ;
-    window.subject[semnum][num-1].course_code = course_code.toString();
-    window.subject[semnum][num-1].credit_hour =  credit_hour.toString() ;
+    window.subject[semnum][num].course = course.toString() ;
+    window.subject[semnum][num].course_code = course_code.toString();
+    window.subject[semnum][num].credit_hour =  credit_hour.toString() ;
 
     var as = document.getElementById(getTableId);
 
@@ -395,8 +488,10 @@ function doneeditsubject(geteditid){
     var editId =  "edit_"+subjectId;
     var deleteId =  "delete"+subjectId;
 
-    
-        var trs = as.getElementsByTagName("tr")[num];
+    var getRow = parseInt(num)+parseInt(1);
+
+    console.log(getRow);
+        var trs = as.getElementsByTagName("tr")[getRow];
 
         trs.innerHTML = `
                 <td><input type="checkbox" name="  " id=${subjectId} value="false"></td>
@@ -434,9 +529,91 @@ function doneeditsubject(geteditid){
 
               var getButton = document.getElementById("donefabbutton");
                 getButton.setAttribute( "onClick", "javascript:getValue();");
+
+//IF THE VALUE OPTIONS CHANGES
+
+
+
+        var sel = document.getElementById("semoption")
+        var getTableId = "";
+        var getTableNum = 0;
+
+
+        if(sel.options[sel.selectedIndex].text==window.sem[semnum].sem_name){
+
+            console.log(" The subject is same with the option");
+            
+        }else{
+
+
+            //DELETING ROW THAT EXIST IN TABLE BEFORE
+
+            var getDeleteTable = "table"+semnum;
+
+            var deleteTable = document.getElementById(getDeleteTable);
+
+           
+
+            for(var i=0;i<deleteTable.rows.length;i++) {
+                var trs = deleteTable.getElementsByTagName("tr")[i];
+                var cellVal=trs.cells[4].id;
+
+                var fields = cellVal.split('_');
+                var one = fields[0];
+                var theIdRow = fields[1];
+
+                if(theIdRow==window.subject[semnum][num].course_id){
+                    deleteTable.deleteRow(i);
+                    window.subject[semnum].splice(num,1);
+                }             
+
+
+            }
+
+            
+
+           
+        //ADDING ROW TO TARGETTED TABLE
+
+            var str = sel.options[sel.selectedIndex].text;
+
+            var fields = str.split(" ");
+            var a = fields[0];
+            var b = fields[1];
+           
+
+            var removeSpace = str.replace(/\s/g, '');
+
+            var targetTable = document.getElementById(removeSpace);
+
+
+            //GET LAST ROW OF TARGETTED TABLE
+
+            // console.log(removeSpace);
+
+            // if(document.getElementById(removeSpace).rows.length==1){
+
+            //     var createIdForRow = 0;
+                
+            //     }
+            //     else{
+            
+            //         getLastId = window.subject[getTableNum][ window.subject[getTableNum].length-1].course_id;
+            
+            //        var createIdForRow = (parseInt(getLastId) )+1;
+            //     }
+
+
+            window.currentTable = b;
+
+            getValue();
+           
+            
+        }
+
+
+
     }
-
-
 
 
 

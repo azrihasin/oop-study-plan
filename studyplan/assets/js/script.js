@@ -12,7 +12,7 @@ var overlay = $("#overlay"),
 //fab click
 
 done.on('click', closeFAB);
-addsubject.on('click', openFAB);
+// addsubject.on('click', openFAB);
 // editmenu.on('click', openFAB);
 
 overlay.on('click', closeFAB);
@@ -23,11 +23,6 @@ function addsubject(){
 }
 
 function openFAB() {
-
-  window.currentTable = this.id;
-
-  console.log("Current button id " + currentTable);
-
 
   
   fab.addClass('active');
@@ -55,3 +50,4 @@ function closeFAB(event) {
   overlay.removeClass('dark-overlay');
   
 }
+

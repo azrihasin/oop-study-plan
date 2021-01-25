@@ -443,3 +443,12 @@ textarea{
   font-size: 4rem;
   outline: none;
 }
+
+.option-group > label {
+  top: 18px;
+  left: 6px;
+  position: relative;
+  background-color: white;
+  padding: 0px 5px 0px 5px;
+  font-size: 0.9em;
+}
