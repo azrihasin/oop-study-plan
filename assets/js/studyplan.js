@@ -638,18 +638,17 @@ function doneeditsubject(geteditid) {
 
     var getCurrentTable;
 
-    for(i=0;i<window.sem.length;i++){
-      if(window.sem[i].sem_name == str){
+    for (i = 0; i < window.sem.length; i++) {
+      if (window.sem[i].sem_name == str) {
         getCurrentTable = window.sem[i].sem_id;
-      }else{
+      } else {
         console.log("error");
       }
     }
 
-
     window.currentTable = getCurrentTable;
 
-    console.log("MOVE CURRENT TABLE ID"+ window.currentTable);
+    console.log("MOVE CURRENT TABLE ID" + window.currentTable);
 
     getValue();
   }
@@ -732,11 +731,120 @@ function buildTable() {
   }
 }
 
-function buildSem() {
+//CSV FILE MANAGEMENT
+
+var el = document.getElementById("fileUpload");
+el.onchange = function () {
+  Upload();
+};
+
+function Upload() {
+  data = [];
+
+  var csvData = new Array();
+
+  var fileUpload = document.getElementById("fileUpload");
+  var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
+  if (regex.test(fileUpload.value.toLowerCase())) {
+    if (typeof FileReader != "undefined") {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var rows = e.target.result.split("\n");
+        for (var i = 1; i < rows.length; i++) {
+          if (rows[i].match(/^[,\s]*$/)) {
+            continue;
+          }
+
+          csvData.push(rows[i].split(","));
+        }
+
+        //CHECK IF THE TABLE IS EMPTY OR NOT
+
+        if (window.sem.length > 0) {
+          var check = confirm("Hello");
+          if (check == true) {
+            console.log("The table will be inserted now");
+
+            //CSV DATA TO ARRAY AND CHECK HOW MANY SEM
+            var newarray = csvData.map(function (value, index) {
+              console.log(csvData[index][0]);
+
+              var reg = /^[0-9]*[.]?[0-9]*$/;
+
+              console.log(reg.test(csvData[index][0]));
+
+              if (reg.test(csvData[index][0])) {
+                return csvData[index][0];
+              }
+            });
+
+            // REFINE AND REMOVE THE UNDEFINED VALUE
+            var data = newarray.filter(function (element) {
+              return element !== undefined;
+            });
+
+            console.log(data);
+
+            getSem = [...new Set(data)];
+
+            console.log("Sem length :" + getSem.length);
+
+            for (i = 0; i < getSem.length; i++) {
+              console.log("Pass through this functiom");
+              if (getSem.length == 0) {
+                sem[0] = new Sem(getSem[i][0], "table" + getSem[i][0]);
+              } else {
+                sem.push(new Sem(getSem[i][0], "table" + getSem[i][0]));
+              }
+
+              buildSem(getSem[i][0], i);
+            }
+
+            for (i = 0; i < csvData.length; i++) {
+              var s_id = csvData[i][0];
+              var s_name = csvData[i][1];
+              var c_id = csvData[i][2];
+              var c_name = csvData[i][3];
+              var c_code = csvData[i][4];
+              var c_hour = csvData[i][5];
+              var taken = csvData[i][6];
+
+              if (i == 0) {
+                subject[0] = [];
+              } else {
+                subject.push([]);
+              }
+
+              window.subject[i].push(
+                new Subject(s_id, s_name, c_id, c_name, c_code, c_hour, taken)
+              );
+
+              buildSubject(c_name, c_id, c_hour, s_id);
+            }
+          } else {
+            console.log("The table change cancelled");
+          }
+        } else {
+          console.log("Table inserted");
+        }
+
+        console.log(csvData[1]);
+      };
+      reader.readAsText(fileUpload.files[0]);
+    } else {
+      alert("This browser does not support HTML5.");
+    }
+  } else {
+    alert("Please upload a valid CSV file.");
+  }
+}
+
+function buildSem(tableId, index) {
   //INDEX OF TABLE
-  let length = window.sem.length;
-  let createId = "table " + length;
-  let createTable = [];
+  let length = index;
+  let createId = "table " + tableId;
+
+  console.log("From build method: "+tableId)
 
   //UPDATE SELECT OPTIO FOR DELETE TABLE
 

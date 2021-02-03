@@ -1,0 +1,4 @@
+sem_id,sem_name,course_id,course,course_code,credit_hour,taken
+0,First year First sem,0,computer,csc,3,FALSE
+0,First year First sem,0,computer,csc,3,FALSE
+1,First year Second sem,1234243,computer,info,3,FALSE
