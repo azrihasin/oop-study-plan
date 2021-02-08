@@ -12,7 +12,7 @@
 /*===== Fuente y tipografia =====*/
 :root {
   --body-font: 'Quicksand', sans-serif;
-  --small-font-size: 0.875rem;
+  /* --small-font-size: 0.875rem; */
 }
 
 
@@ -215,9 +215,10 @@ tr:nth-child(even) {
 }
 
 .card{
-  padding: 0.5em;
-  padding-right: 4.5em ;
-  padding-left: 1em;
+  margin: 1.5rem;
+  padding: 3rem;
+  background-color: white;
+  border-radius: 20px;
 }
 
 /* mdl - popup */
@@ -309,6 +310,61 @@ tr:nth-child(even) {
   padding: 100px 35px 0 35px;
   color: #757575;
 }
+
+/* MULTIPLE ADD CSS */
+
+/* The Modal (background) */
+.mulmodal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.mulmodal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.mulclose {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.mulclose:hover,
+.mulclose:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mul {
+  margin: 1rem;
+  font-size: 1rem;
+  outline: none;
+  border: 1px solid gray;
+  border-radius: 5px;  
+  padding: 1rem 0.7rem;
+  color: gray;
+  transition: 0.1s ease-out;
+}
+.mul:focus {
+  border-color: #6200EE;  
+}
+
 
 .btn-wrapper {
   position: absolute;
@@ -489,4 +545,25 @@ textarea{
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+.button-section{
+  /* display: inline;
+  vertical-align: top; */
+
+  display: grid;
+  grid-template-columns: 6fr 2fr;
+  
+  
+}
+
+
+.addsubject > span{
+  font-size:0.85rem;
+  /* text-transform: none; */
+}
+
+.addsection{
+  display: inline;
+  vertical-align: top;
 }

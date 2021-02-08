@@ -88,6 +88,10 @@ function addSem() {
   var editbtn = document.createElement("DIV");
   var tableNameArea = document.createElement("DIV");
   var tablename = document.createElement("TEXTAREA");
+  var muladdbtn = document.createElement("DIV");
+  var deleteTableBtn = document.createElement("DIV");
+
+  var buttonSection = document.createElement("DIV");
 
   var div = document.createElement("div");
 
@@ -129,19 +133,44 @@ function addSem() {
             <th id="credit_hour">Credit hour</th>
             <th></th>`;
 
+  //BUTTON SECTION
+
   //ADD SUBJECT BUTTON ELEMENT
-  addbtn.innerHTML = `<button id="${tableId}" class="addsubject mdc-button mdc-button--raised" >
+
+  var addsection = document.createElement("DIV");
+  addsection.className = "addsection";
+
+  addbtn.innerHTML = `<button onclick="openModalAddSubject(this.id)" id="${tableId}" class="addsubject mdc-button mdc-button--raised " >
             <span class="mdc-button__label">Add Subject</span>
             </button>`;
 
-  addbtn.onclick = function () {
-    window.currentTable = tableId;
-    console.log("Debug id:" + window.currentTable);
+  muladdbtn.innerHTML = `<button onclick="setCurrentForMulSub(this.id)" id="${
+    "muladd_" + tableId
+  }" class="addsubject mdc-button mdc-button--raised" >
+            <span class="mdc-button__label">Add Multiple Subject</span>
+            </button>`;
 
-    openFAB();
-  };
-  // addbtn.setAttribute("id", tableId);
-  addbtn.style.width = "auto";
+  deleteTableBtn.innerHTML = `<button onclick=" deleteSem(this.id)" id="${
+    "delete_" + tableId
+  }" class="deleteubject mdc-button mdc-button--raised" >
+            <span class="mdc-button__label">Delete Table</span>
+            </button>`;
+
+  addbtn.style.float = "left";
+  addbtn.style.margin = "0.5rem";
+  muladdbtn.style.float = "left";
+  muladdbtn.style.margin = "0.5rem";
+  // deleteTableBtn.style.float = "left";
+  deleteTableBtn.style.margin = "0.5rem";
+
+  addsection.appendChild(addbtn);
+  addsection.appendChild(muladdbtn);
+
+  buttonSection.className = "button-section";
+  // buttonSection.appendChild(addbtn);
+  // buttonSection.appendChild(muladdbtn);
+  buttonSection.appendChild(addsection);
+  buttonSection.appendChild(deleteTableBtn);
 
   //INSERT ELEMENT HEADER TO TABLE
   table.appendChild(tr);
@@ -151,7 +180,7 @@ function addSem() {
   //CREATE DIV FOR TABLE AND APPEND TABLE TO DIV
   div.appendChild(tableNameArea);
   div.appendChild(table);
-  div.appendChild(addbtn);
+  div.appendChild(buttonSection);
   div.className = "card";
   div.setAttribute("id", "card" + tableId);
   tablespace.appendChild(div);
@@ -179,41 +208,6 @@ function addSem() {
   li.innerHTML = `${window.sem[length].sem_name}`;
 
   selectlist.appendChild(li);
-
-  //SELECT OPTION STATE CURRENT TABLE
-
-  var stateoption = document.getElementById(tableId);
-
-  stateoption.onclick = function () {
-    var opts = document.getElementById("semoption").options;
-
-    var index;
-
-    for (i = 0; i < window.sem.length; i++) {
-      if (window.sem[i].sem_id == tableId) {
-        index = i;
-        console.log(window.currentTable);
-        console.log(window.sem[i].sem_id);
-        console.log(index);
-      }
-    }
-
-    console.log(window.sem);
-    console.log(index);
-
-    for (var i = 0; i < opts.length; i++) {
-      if (opts[i].innerText == window.sem[index].sem_name) {
-        console.log(window.sem[index].sem_name);
-
-        opts[i].selected = "true";
-
-        break;
-      }
-    }
-
-    console.log("Current button id " + window.currentTable);
-    openFAB();
-  };
 }
 
 function getValue() {
@@ -261,6 +255,7 @@ function getValue() {
   var taken = "false";
 
   var subjectId = s_id + "_" + c_id;
+  var checkBox = "checkbox_" + subjectId;
   var buttonId = "button" + subjectId;
   var listId = "list" + subjectId;
   var iconId = "icon" + subjectId;
@@ -280,7 +275,7 @@ function getValue() {
     .insertRow();
   // newRow = "<td>New row text</td><td>New row 2nd cell</td>"; <-- won't work
   newRow.innerHTML = `
-                        <td><input type="checkbox" name="  " id=${subjectId} value="false"></td>
+                        <td><input type="checkbox" name="  " id=${checkBox} value="false"></td>
                         <td>${course_code}</td>
                         <td>${course}</td>
                         <td>${credit_hour}</td>
@@ -410,6 +405,12 @@ function changeState(getid) {
 }
 
 function editsubject(geteditid) {
+  var setcurrent = geteditid.split("_");
+   
+    window.currentTable= setcurrent[1];
+
+
+  setOptionToCurrent();
   openFAB();
 
   console.log("GetEditId: " + geteditid);
@@ -435,8 +436,10 @@ function editsubject(geteditid) {
     }
   }
 
+  console.log("Get index " + getIndex);
   console.log(fields);
   console.log(semnum);
+  console.log("Length "+window.subject[semnum].length);
   console.log(num);
   console.log("See subject :" + window.subject[semnum][num].course);
   console.log(window.subject[semnum]);
@@ -654,80 +657,35 @@ function doneeditsubject(geteditid) {
   }
 }
 
-function deleteSem() {
-  var e = document.getElementById("tables");
+function deleteSem(value) {
+  var fields = value.split("_");
+  var name = fields[0];
+  var tableIndex = fields[1];
 
-  var e2 = document.getElementById("semoption");
-
-  var text = e.options[e.selectedIndex].text;
-
-  console.log(text);
+  var index;
 
   for (i = 0; i < window.sem.length; i++) {
-    if (window.sem[i].sem_name == text) {
-      var tbl = document.getElementById("table" + i);
-      // if(tbl) tbl.parentNode.removeChild(tbl);
-      tbl.remove();
-
-      document.getElementById("card" + i).remove();
-
-      window.sem.splice(i, 1);
-
-      console.log(window.sem);
-
-      //DELETE SPLICE ALL THE ELEMENT IN ARRAY
-
-      for (j = 0; j < window.subject[i].length; j++) {
-        window.subject[i].splice(j, 1);
-        window.subject.splice(j, 1);
-      }
-
-      //DELETE ALL ELEMENT
-
-      //e.firstElementChild can be used.
-      var el = document.getElementById("cards");
-
-      while (el.firstChild) el.removeChild(el.firstChild);
-
-      //RECONSTRUCT ARRAY
-
-      for (x = 0; x < window.sem.length; x++) {
-        window.sem[x].sem_id = x;
-
-        for (y = 0; y < window.subject[x].length; y++) {
-          window.subject[x][y].sem_id = x;
-        }
-      }
-
-      console.log(window.sem);
-      console.log(window.subject);
-
-      //BUILD ARRAY
-
-      buildTable();
+    if (window.sem[i].sem_id == tableIndex) {
+      console.log(tableIndex);
+      index = i;
     }
   }
-  modal.style.display = "none";
-}
 
-function buildTable() {
-  var studyPlanLength = window.sem.length;
+  var tbl = document.getElementById("table" + tableIndex);
+  // if(tbl) tbl.parentNode.removeChild(tbl);
+  tbl.remove();
 
-  for (i = 0; i < studyPlanLength; i++) {
-    //BUILD THE TABLE
-    buildSem();
+  document.getElementById("card" + tableIndex).parentElement.remove();
 
-    if (window.subject[i].length > 0) {
-      for (j = 0; j < window.subject[i].length; j++) {
-        var course = window.subject[i][j].course;
-        var course_code = window.subject[i][j].course_code;
-        var credit_hour = window.subject[i][j].credit_hour;
-        var tableIndex = i;
+  window.sem.splice(index, 1);
 
-        //BUILD ALL THE SUBJECT
-        buildSubject(course, course_code, credit_hour, tableIndex);
-      }
-    }
+  console.log(window.sem);
+
+  //DELETE SPLICE ALL THE ELEMENT IN ARRAY
+
+  for (j = 0; j < window.subject[index].length; j++) {
+    window.subject[index].splice(j, 1);
+    window.subject.splice(j, 1);
   }
 }
 
@@ -761,71 +719,188 @@ function Upload() {
         //CHECK IF THE TABLE IS EMPTY OR NOT
 
         if (window.sem.length > 0) {
-          var check = confirm("Hello");
+          var check = confirm("All the existing table will be deleted");
           if (check == true) {
             console.log("The table will be inserted now");
 
             //CSV DATA TO ARRAY AND CHECK HOW MANY SEM
             var newarray = csvData.map(function (value, index) {
-              console.log(csvData[index][0]);
+              console.log("Csv data" + csvData[index][0]);
 
               var reg = /^[0-9]*[.]?[0-9]*$/;
 
-              console.log(reg.test(csvData[index][0]));
+              // console.log(reg.test(csvData[index][0]));
+              // if (reg.test(csvData[index][0])) {
+              //   return csvData[index][0];
+              // }
 
-              if (reg.test(csvData[index][0])) {
-                return csvData[index][0];
-              }
+              return csvData[index][0];
             });
 
             // REFINE AND REMOVE THE UNDEFINED VALUE
+
+            var selectlist = document.getElementById("semoption");
+
+            var rows = selectlist.getElementsByTagName("option");
+            while (rows.length > 1) {
+              rows[1].parentNode.removeChild(rows[1]);
+            }
+
+
+
             var data = newarray.filter(function (element) {
               return element !== undefined;
             });
 
             console.log(data);
 
+            var getSem;
+
             getSem = [...new Set(data)];
 
             console.log("Sem length :" + getSem.length);
 
-            for (i = 0; i < getSem.length; i++) {
-              console.log("Pass through this functiom");
-              if (getSem.length == 0) {
-                sem[0] = new Sem(getSem[i][0], "table" + getSem[i][0]);
-              } else {
-                sem.push(new Sem(getSem[i][0], "table" + getSem[i][0]));
-              }
+            //REMOVE ALL ELEMENT
 
-              buildSem(getSem[i][0], i);
+            for (var i = 0; i < window.sem.length; i++) {
+              var tableIndex = window.sem[i].sem_id;
+              var tbl = document.getElementById("table" + tableIndex);
+              tbl.remove();
+
+              document
+                .getElementById("card" + tableIndex)
+                .parentElement.remove();
             }
 
-            for (i = 0; i < csvData.length; i++) {
-              var s_id = csvData[i][0];
-              var s_name = csvData[i][1];
-              var c_id = csvData[i][2];
-              var c_name = csvData[i][3];
-              var c_code = csvData[i][4];
-              var c_hour = csvData[i][5];
-              var taken = csvData[i][6];
+            //REMOVE ALL ARRAY
 
-              if (i == 0) {
-                subject[0] = [];
+            window.sem = [];
+            window.subject = [];
+
+            //BUILD THE TABLE
+
+            console.log("Get sem " + getSem);
+
+            for (i = 0; i < getSem.length; i++) {
+              console.log("Pass through this build table");
+              console.log(csvData[i][0]);
+              if (getSem.length == 0) {
+                window.sem[0] = new Sem(csvData[i][0], "table" + csvData[i][0]);
               } else {
-                subject.push([]);
+                window.sem.push(
+                  new Sem(csvData[i][0], csvData[i][1])
+                );
+              }
+
+              buildSem(csvData[i][0], i);
+
+              for (j = 0; j < csvData.length; j++) {
+                var s_id = csvData[j][0];
+                var s_name = csvData[j][1];
+                var c_id = csvData[j][2];
+                var c_name = csvData[j][3];
+                var c_code = csvData[j][4];
+                var c_hour = csvData[j][5];
+                var taken = csvData[j][6];
+  
+                if (j == 0) {
+                  window.subject[0] = [];
+                } else {
+                  window.subject.push([]);
+                }
+  
+                window.subject[i].push(
+                  new Subject(s_id, s_name, c_id, c_name, c_code, c_hour, taken)
+                );
+  
+                buildSubject(c_id, c_name, c_code, c_hour, s_id);
+              }
+            }
+
+          
+          } else {
+            console.log("The table change cancelled");
+          }
+        } else {
+          console.log("Table inserted");
+          console.log("The table will be inserted now");
+
+          //CSV DATA TO ARRAY AND CHECK HOW MANY SEM
+          var newarray = csvData.map(function (value, index) {
+            console.log("Csv data" + csvData[index][0]);
+
+            var reg = /^[0-9]*[.]?[0-9]*$/;
+
+            // console.log(reg.test(csvData[index][0]));
+            // if (reg.test(csvData[index][0])) {
+            //   return csvData[index][0];
+            // }
+
+            return csvData[index][0];
+          });
+
+          // REFINE AND REMOVE THE UNDEFINED VALUE
+
+          var selectlist = document.getElementById("semoption");
+
+          var rows = selectlist.getElementsByTagName("option");
+          while (rows.length > 1) {
+            rows[1].parentNode.removeChild(rows[1]);
+          }
+
+
+
+          var data = newarray.filter(function (element) {
+            return element !== undefined;
+          });
+
+          console.log(data);
+
+          var getSem;
+
+          getSem = [...new Set(data)];
+
+          console.log("Sem length :" + getSem.length);
+
+          //BUILD THE TABLE
+
+          console.log("Get sem " + getSem);
+
+          for (i = 0; i < getSem.length; i++) {
+            console.log("Pass through this build table");
+            console.log(csvData[i][0]);
+            if (getSem.length == 0) {
+              window.sem[0] = new Sem(csvData[i][0], "table" + csvData[i][0]);
+            } else {
+              window.sem.push(
+                new Sem(csvData[i][0], csvData[i][1])
+              );
+            }
+
+            buildSem(csvData[i][0], i);
+
+            for (j = 0; j < csvData.length; j++) {
+              var s_id = csvData[j][0];
+              var s_name = csvData[j][1];
+              var c_id = csvData[j][2];
+              var c_name = csvData[j][3];
+              var c_code = csvData[j][4];
+              var c_hour = csvData[j][5];
+              var taken = csvData[j][6];
+
+              if (j == 0) {
+                window.subject[0] = [];
+              } else {
+                window.subject.push([]);
               }
 
               window.subject[i].push(
                 new Subject(s_id, s_name, c_id, c_name, c_code, c_hour, taken)
               );
 
-              buildSubject(c_name, c_id, c_hour, s_id);
+              buildSubject(c_id, c_name, c_code, c_hour, s_id);
             }
-          } else {
-            console.log("The table change cancelled");
           }
-        } else {
-          console.log("Table inserted");
         }
 
         console.log(csvData[1]);
@@ -839,14 +914,13 @@ function Upload() {
   }
 }
 
-function buildSem(tableId, index) {
+function buildSem(gettableId, index) {
   //INDEX OF TABLE
   let length = index;
+  let tableId = gettableId;
   let createId = "table " + tableId;
 
-  console.log("From build method: "+tableId)
-
-  //UPDATE SELECT OPTIO FOR DELETE TABLE
+  //UPDATE SELECT OPTION FOR DELETE TABLE
 
   var deleteList = document.getElementById("tables");
 
@@ -864,12 +938,16 @@ function buildSem(tableId, index) {
   var editbtn = document.createElement("DIV");
   var tableNameArea = document.createElement("DIV");
   var tablename = document.createElement("TEXTAREA");
+  var muladdbtn = document.createElement("DIV");
+  var deleteTableBtn = document.createElement("DIV");
+
+  var buttonSection = document.createElement("DIV");
 
   var div = document.createElement("div");
 
   //TABLE NAME
-  var tableNameId = "tablename" + length;
-  var t = document.createTextNode(createId);
+  var tableNameId = "tablename" + tableId;
+  var t = document.createTextNode("table" + length);
   tablename.appendChild(t);
   tablename.setAttribute("id", tableNameId);
   tablename.readOnly = true;
@@ -881,8 +959,8 @@ function buildSem(tableId, index) {
 
   //EDIT BUTTON FOR TABLENAME
 
-  editButtonId = "editbuttonid-" + length;
-  editButtonIcon = "editbuttonicon-" + length;
+  var editButtonId = "editbuttonid_" + tableId;
+  var editButtonIcon = "editbuttonicon_" + tableId;
 
   editbtn.style.width = "56px";
   editbtn.style.height = "56px";
@@ -890,8 +968,8 @@ function buildSem(tableId, index) {
   editbtn.style.paddingTop = "5px";
 
   editbtn.innerHTML = `<button id="${editButtonId}" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" onclick="changeState(this.id)">
-          <i id="${editButtonIcon}" class="material-icons">edit</i>
-          </button>`;
+        <i id="${editButtonIcon}" class="material-icons">edit</i>
+        </button>`;
 
   tableNameArea.appendChild(editbtn);
 
@@ -901,30 +979,60 @@ function buildSem(tableId, index) {
   //TABLE HEADER
   var tr = document.createElement("tr");
   tr.innerHTML = `<th><input type="checkbox" name="" id=""></th><th id="course_code ">Course code</th>
-              <th id="course">Course</th>
-              <th id="credit_hour">Credit hour</th>
-              <th></th>`;
+            <th id="course">Course</th>
+            <th id="credit_hour">Credit hour</th>
+            <th></th>`;
+
+  //BUTTON SECTION
 
   //ADD SUBJECT BUTTON ELEMENT
-  addbtn.innerHTML = `<button class="addsubject mdc-button mdc-button--raised" >
-              <span class="mdc-button__label">Add Subject</span>
-              </button>`;
 
-  addbtn.onclick = openFAB;
-  addbtn.setAttribute("id", length);
-  addbtn.style.width = "auto";
+  var addsection = document.createElement("DIV");
+  addsection.className = "addsection";
+
+  addbtn.innerHTML = `<button onclick="openModalAddSubject(this.id)" id="${tableId}" class="addsubject mdc-button mdc-button--raised " >
+            <span class="mdc-button__label">Add Subject</span>
+            </button>`;
+
+  muladdbtn.innerHTML = `<button onclick="setCurrentForMulSub(this.id)" id="${
+    "muladd_" + tableId
+  }" class="addsubject mdc-button mdc-button--raised" >
+            <span class="mdc-button__label">Add Multiple Subject</span>
+            </button>`;
+
+  deleteTableBtn.innerHTML = `<button onclick=" deleteSem(this.id)" id="${
+    "delete_" + tableId
+  }" class="deleteubject mdc-button mdc-button--raised" >
+            <span class="mdc-button__label">Delete Table</span>
+            </button>`;
+
+  addbtn.style.float = "left";
+  addbtn.style.margin = "0.5rem";
+  muladdbtn.style.float = "left";
+  muladdbtn.style.margin = "0.5rem";
+  // deleteTableBtn.style.float = "left";
+  deleteTableBtn.style.margin = "0.5rem";
+
+  addsection.appendChild(addbtn);
+  addsection.appendChild(muladdbtn);
+
+  buttonSection.className = "button-section";
+  // buttonSection.appendChild(addbtn);
+  // buttonSection.appendChild(muladdbtn);
+  buttonSection.appendChild(addsection);
+  buttonSection.appendChild(deleteTableBtn);
 
   //INSERT ELEMENT HEADER TO TABLE
   table.appendChild(tr);
   table.appendChild(tablebody);
-  table.setAttribute("id", "table" + length);
+  table.setAttribute("id", "table" + tableId);
 
   //CREATE DIV FOR TABLE AND APPEND TABLE TO DIV
   div.appendChild(tableNameArea);
   div.appendChild(table);
-  div.appendChild(addbtn);
+  div.appendChild(buttonSection);
   div.className = "card";
-  div.setAttribute("id", "card" + length);
+  div.setAttribute("id", "card" + tableId);
   tablespace.appendChild(div);
 
   //MAKE THE ADD TABLE BUTTON TO THE LASS ELEMENT
@@ -946,58 +1054,42 @@ function buildSem(tableId, index) {
 
   var selectlist = document.getElementById("semoption");
 
-  tablepick = "Table " + length;
-
   var li = document.createElement("option");
   li.innerHTML = `${window.sem[length].sem_name}`;
 
   selectlist.appendChild(li);
-
-  //SELECT OPTION STATE CURRENT TABLE
-
-  var stateoption = document.getElementById(length);
-
-  stateoption.onclick = function () {
-    var opts = document.getElementById("semoption").options;
-
-    for (var i = 0; i < opts.length; i++) {
-      if (opts[i].innerText == window.sem[window.currentTable].sem_name) {
-        console.log(window.sem[window.currentTable].sem_name);
-
-        opts[i].selected = "true";
-
-        break;
-      }
-    }
-
-    window.currentTable = this.id;
-
-    console.log("Current button id " + currentTable);
-    openFAB();
-  };
 }
 
-function buildSubject(course, course_code, credit_hour, tableIndex) {
+function buildSubject(course_id, course, course_code, credit_hour, tableIndex) {
   //CREATE ALL VARIABLES
 
   var tableId = "table" + tableIndex;
 
   console.log("Table Id:" + tableId);
 
+  for (i = 0; i < window.sem.length; i++) {
+    console.log("Sem id " + window.sem[i].sem_id);
+    console.log("Sem id in array" + tableIndex);
+    if (window.sem[i].sem_id == tableIndex) {
+      console.log("Get through here");
+      var index = i;
+    } else {
+      alert("Not find table");
+    }
+  }
+
+  console.log("Index of table " + index);
+
   var table = document.getElementById(tableId);
 
-  console.log("ROW TO BECOME ID" + table.tBodies[0].rows.length);
+  var getLength = window.subject[index].length;
 
-  var rowCount = 0;
-
-  var getLength = window.subject[tableIndex].length;
-
-  rowCount = create_UUID();
+  rowCount = course_id;
 
   //CHECK SEM NEM
 
   var s_id = tableIndex;
-  var s_name = window.sem[tableIndex].sem_name;
+  var s_name = window.sem[index].sem_name;
   var c_id = rowCount;
   var c_name = course;
   var c_code = course_code;
@@ -1052,6 +1144,49 @@ function buildSubject(course, course_code, credit_hour, tableIndex) {
   componentHandler.upgradeElement(deletesub);
 }
 
+function download_csv() {
+  if (window.subject.length > 0) {
+    var data = [];
+
+    var rowcount = 0;
+
+    for (i = 0; i < window.subject.length; i++) {
+      for (j = 0; j < window.subject[i].length; j++) {
+        data.push([]);
+
+        data[rowcount].push([
+          window.subject[i][j].sem_id,
+          window.subject[i][j].sem_name,
+          window.subject[i][j].course_id,
+          window.subject[i][j].course,
+          window.subject[i][j].course_code,
+          window.subject[i][j].credit_hour,
+          window.subject[i][j].taken,
+        ]);
+
+        rowcount = rowcount + 1;
+      }
+    }
+
+    var csv =
+      "sem_id,sem_name,course_id,course,course_code,credit_hour,taken\n";
+    data.forEach(function (row) {
+      csv += row.join(",");
+      csv += "\n";
+    });
+
+    console.log(csv);
+    var hiddenElement = document.createElement("a");
+    hiddenElement.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
+    hiddenElement.target = "_blank";
+    hiddenElement.download = "studyplan.csv";
+    hiddenElement.click();
+  } else {
+    alert("Nothing to be downloaded");
+  }
+}
+
+//CREATE UUID
 function create_UUID() {
   var dt = new Date().getTime();
   var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
@@ -1063,4 +1198,117 @@ function create_UUID() {
     }
   );
   return uuid;
+}
+
+//FOR ADDING MULTIPLE SUBJECT
+function muladdsubjectarea() {
+  var getArea = document.getElementById("mularea");
+
+  var createArea = document.createElement("DIV");
+  var courseCodeArea = document.createElement("INPUT");
+  var courseArea = document.createElement("INPUT");
+  var creditHourArea = document.createElement("INPUT");
+
+  courseCodeArea.className = "mul";
+  courseCodeArea.setAttribute("id", "mulcoursecode");
+  courseCodeArea.placeholder = "Course Code";
+
+  courseArea.className = "mul";
+  courseArea.setAttribute("id", "mulcourse");
+  courseArea.placeholder = "Course ";
+
+  creditHourArea.className = "mul";
+  creditHourArea.setAttribute("id", "mulcredithour");
+  creditHourArea.placeholder = "Credit Hour";
+
+  createArea.appendChild(courseCodeArea);
+  createArea.appendChild(courseArea);
+  createArea.appendChild(creditHourArea);
+
+  getArea.appendChild(createArea);
+}
+
+function muldeletesubjectarea() {
+  var parent = document.getElementById("mularea");
+  parent.removeChild(parent.lastElementChild);
+}
+
+function muldone() {
+  var divNode = document.getElementById("mularea");
+  var inputNodes = divNode.getElementsByTagName("DIV");
+
+  for (var i = 0; i < inputNodes.length; ++i) {
+    var inputNode = inputNodes[i];
+
+    var inputAreas = inputNode.getElementsByTagName("INPUT");
+
+    document.getElementById("coursecodeinput").value = inputAreas[0].value;
+    document.getElementById("coursenameinput").value = inputAreas[1].value;
+    document.getElementById("credithourinput").value = inputAreas[2].value;
+
+    getValue();
+  }
+
+  //RESET THE AREA BACK
+
+  var myNode = document.getElementById("mularea");
+  while (myNode.firstChild) {
+    myNode.removeChild(myNode.lastChild);
+  }
+
+  muladdsubjectarea();
+
+  mulcancel();
+}
+
+function mulcancel() {
+  var mulmodal = document.getElementById("mulModal");
+
+  mulmodal.style.display = "none";
+}
+
+//OPEN MODAL ADD SUBJECT
+function openModalAddSubject(tableId) {
+  window.currentTable = tableId;
+
+  setOptionToCurrent();
+
+  console.log("Debug id:" + window.currentTable);
+
+  openFAB();
+}
+
+function setCurrentForMulSub(value) {
+  var fields = value.split("_");
+  var name = fields[0];
+  var tableIndex = fields[1];
+
+  mulmodal.style.display = "block";
+  window.currentTable = tableIndex;
+}
+
+function setOptionToCurrent() {
+  var sel = document.getElementById("semoption");
+
+
+
+  for (var i = 0; i < window.sem.length; i++) {
+    if (window.currentTable == window.sem[i].sem_id) {
+      var getName = window.sem[i].sem_name;
+      var val = i;
+      console.log("Option index" + i);
+    } else {
+      console.log("Not find");
+    }
+  }
+
+  sel.options[0].disabled = true ;
+
+  for (var i = 0; i < sel.options.length; ++i) {
+    if (sel.options[i].innerHTML === getName) {
+      sel.selectedIndex = i;
+      console.log(sel.options[i].innerHTML);
+      break;
+    }
+  }
 }

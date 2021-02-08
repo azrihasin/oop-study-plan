@@ -1,42 +1,21 @@
 //Variables
 
-
 var overlay = $("#overlay"),
-        fab = $(".fab"),
- addsubject = $(".addsubject"),
-     submit = $("#submit"),
-     done=$(".done"),
-    //  editmenu=$(".editmenu")
-     cancelbutton = $(".cancel");
+  fab = $(".fab"),
+  mulfab = $(".multiple_fab"),
+  submit = $("#submit"),
+  done = $(".done"),
+  cancelbutton = $(".cancel");
 
 //fab click
 
-done.on('click', closeFAB);
-// addsubject.on('click', openFAB);
-// editmenu.on('click', openFAB);
-
-overlay.on('click', closeFAB);
-cancelbutton.on('click', closeFAB);
-
-// function addsubject(){
-//   openFAB;
-// }
+done.on("click", closeFAB);
+overlay.on("click", closeFAB);
+cancelbutton.on("click", closeFAB);
 
 function openFAB() {
-  
-  fab.addClass('active');
-  overlay.addClass('dark-overlay');
-
-}
-
-function getValue(){
-    // var course = document.getElementById("coursenameinput").value;
-    // var course_code = document.getElementById("coursecodeinput").value;
-    // var credit_hour = document.getElementById("credithourinput").value;
-
-    // alert(course,course_code,credit_hour);
-    done.on('click', closeFAB);
-  
+  fab.addClass("active");
+  overlay.addClass("dark-overlay");
 }
 
 function closeFAB(event) {
@@ -45,10 +24,11 @@ function closeFAB(event) {
     event.stopImmediatePropagation();
   }
 
-  fab.removeClass('active');
-  overlay.removeClass('dark-overlay');
-  
+  fab.removeClass("active");
+  overlay.removeClass("dark-overlay");
 }
+
+//FOR DELETE BUTTON
 
 var modal = document.getElementById("myModal");
 
@@ -58,27 +38,44 @@ var btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
+// When the user clicks the button, open the modal
+btn.onclick = function () {
   modal.style.display = "block";
   var tableLength = window.sem.length;
 
-  
-
   var deleteList = document.getElementById("tables");
 
-  deleteList.options[0].selected = true ;
-}
+  deleteList.options[0].selected = true;
+};
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
+span.onclick = function () {
   modal.style.display = "none";
-}
+};
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
-}
+};
 
+//FOR ADD MULTIPLE SUBJECT MODAL
+
+// Get the modal
+var mulmodal = document.getElementById("mulModal");
+
+// Get the <span> element that closes the modal
+var mulspan = document.getElementsByClassName("mulclose")[0];
+
+// When the user clicks on <span> (x), close the modal
+mulspan.onclick = function () {
+  mulmodal.style.display = "none";
+};
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+  if (event.target == mulmodal) {
+    mulmodal.style.display = "none";
+  }
+};
