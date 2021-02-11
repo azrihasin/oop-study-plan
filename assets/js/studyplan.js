@@ -127,8 +127,10 @@ function addSem() {
   var tablebody = document.createElement("TBODY");
 
   //TABLE HEADER
+  checkBoxAll = "checkboxall_" + tableId;
+
   var tr = document.createElement("tr");
-  tr.innerHTML = `<th><input type="checkbox" name="" id=""></th><th id="course_code ">Course code</th>
+  tr.innerHTML = `<th><input type="checkbox" name="" id="${checkBoxAll}" onclick="changeCheckboxForAll(this.id)></th><th id="course_code ">Course code</th>
             <th id="course">Course</th>
             <th id="credit_hour">Credit hour</th>
             <th></th>`;
@@ -275,7 +277,7 @@ function getValue() {
     .insertRow();
   // newRow = "<td>New row text</td><td>New row 2nd cell</td>"; <-- won't work
   newRow.innerHTML = `
-                        <td><input type="checkbox" name="  " id=${checkBox} value="false"></td>
+                        <td><input type="checkbox" name=" " id=${checkBox} onclick="changeCheckbox(this.id)" value="false"></td>
                         <td>${course_code}</td>
                         <td>${course}</td>
                         <td>${credit_hour}</td>
@@ -406,9 +408,8 @@ function changeState(getid) {
 
 function editsubject(geteditid) {
   var setcurrent = geteditid.split("_");
-   
-    window.currentTable= setcurrent[1];
 
+  window.currentTable = setcurrent[1];
 
   setOptionToCurrent();
   openFAB();
@@ -439,7 +440,7 @@ function editsubject(geteditid) {
   console.log("Get index " + getIndex);
   console.log(fields);
   console.log(semnum);
-  console.log("Length "+window.subject[semnum].length);
+  console.log("Length " + window.subject[semnum].length);
   console.log(num);
   console.log("See subject :" + window.subject[semnum][num].course);
   console.log(window.subject[semnum]);
@@ -746,8 +747,6 @@ function Upload() {
               rows[1].parentNode.removeChild(rows[1]);
             }
 
-
-
             var data = newarray.filter(function (element) {
               return element !== undefined;
             });
@@ -787,9 +786,7 @@ function Upload() {
               if (getSem.length == 0) {
                 window.sem[0] = new Sem(csvData[i][0], "table" + csvData[i][0]);
               } else {
-                window.sem.push(
-                  new Sem(csvData[i][0], csvData[i][1])
-                );
+                window.sem.push(new Sem(csvData[i][0], csvData[i][1]));
               }
 
               buildSem(csvData[i][0], i);
@@ -802,22 +799,20 @@ function Upload() {
                 var c_code = csvData[j][4];
                 var c_hour = csvData[j][5];
                 var taken = csvData[j][6];
-  
+
                 if (j == 0) {
                   window.subject[0] = [];
                 } else {
                   window.subject.push([]);
                 }
-  
+
                 window.subject[i].push(
                   new Subject(s_id, s_name, c_id, c_name, c_code, c_hour, taken)
                 );
-  
+
                 buildSubject(c_id, c_name, c_code, c_hour, s_id);
               }
             }
-
-          
           } else {
             console.log("The table change cancelled");
           }
@@ -848,8 +843,6 @@ function Upload() {
             rows[1].parentNode.removeChild(rows[1]);
           }
 
-
-
           var data = newarray.filter(function (element) {
             return element !== undefined;
           });
@@ -872,9 +865,7 @@ function Upload() {
             if (getSem.length == 0) {
               window.sem[0] = new Sem(csvData[i][0], "table" + csvData[i][0]);
             } else {
-              window.sem.push(
-                new Sem(csvData[i][0], csvData[i][1])
-              );
+              window.sem.push(new Sem(csvData[i][0], csvData[i][1]));
             }
 
             buildSem(csvData[i][0], i);
@@ -912,6 +903,8 @@ function Upload() {
   } else {
     alert("Please upload a valid CSV file.");
   }
+
+  document.getElementById("fileUpload").value = null;
 }
 
 function buildSem(gettableId, index) {
@@ -977,8 +970,11 @@ function buildSem(gettableId, index) {
   var tablebody = document.createElement("TBODY");
 
   //TABLE HEADER
+
+  checkBoxAll = "checkboxall_" + tableId;
+
   var tr = document.createElement("tr");
-  tr.innerHTML = `<th><input type="checkbox" name="" id=""></th><th id="course_code ">Course code</th>
+  tr.innerHTML = `<th><input type="checkbox" name="" id="${checkBoxAll}" onclick="changeCheckboxForAll(this.id)"></th><th id="course_code ">Course code</th>
             <th id="course">Course</th>
             <th id="credit_hour">Credit hour</th>
             <th></th>`;
@@ -1097,6 +1093,7 @@ function buildSubject(course_id, course, course_code, credit_hour, tableIndex) {
   var taken = "false";
 
   var subjectId = s_id + "_" + c_id;
+  var checkboxId = "check_" + subjectId;
   var buttonId = "button" + subjectId;
   var listId = "list" + subjectId;
   var iconId = "icon" + subjectId;
@@ -1110,7 +1107,7 @@ function buildSubject(course_id, course, course_code, credit_hour, tableIndex) {
     .insertRow();
   // newRow = "<td>New row text</td><td>New row 2nd cell</td>"; <-- won't work
   newRow.innerHTML = `
-                        <td><input type="checkbox" name="  " id=${subjectId} value="false"></td>
+                        <td><input type="checkbox" name="  " id=${checkboxId} onclick="changeCheckbox(this.id)" value="false"></td>
                         <td>${course_code}</td>
                         <td>${course}</td>
                         <td>${credit_hour}</td>
@@ -1290,8 +1287,6 @@ function setCurrentForMulSub(value) {
 function setOptionToCurrent() {
   var sel = document.getElementById("semoption");
 
-
-
   for (var i = 0; i < window.sem.length; i++) {
     if (window.currentTable == window.sem[i].sem_id) {
       var getName = window.sem[i].sem_name;
@@ -1302,7 +1297,7 @@ function setOptionToCurrent() {
     }
   }
 
-  sel.options[0].disabled = true ;
+  sel.options[0].disabled = true;
 
   for (var i = 0; i < sel.options.length; ++i) {
     if (sel.options[i].innerHTML === getName) {
@@ -1310,5 +1305,132 @@ function setOptionToCurrent() {
       console.log(sel.options[i].innerHTML);
       break;
     }
+  }
+}
+
+//CHECKBOX MANAGEMENT FOR ALL CLICK
+
+function changeCheckboxForAll(value) {
+  var fields = value.split("_");
+  var getTableIndex = fields[1];
+  var semnum;
+
+  for (i = 0; i < window.sem.length; i++) {
+    if (window.sem[i].sem_id == getTableIndex) {
+      semnum = i;
+    }
+  }
+
+  var decider = document.getElementById(value);
+  if (decider.checked) {
+    console.log("check");
+
+    var table = document.getElementById("table" + getTableIndex);
+
+    var content = table.getElementsByTagName("tbody")[0];
+
+    for (var i = 0; i < content.rows.length; i++) {
+      content.rows[i].style.backgroundColor = "#dddddd";
+
+      window.subject[semnum][i].taken = "true";
+
+      //SET THE CHECKBOX TO TRUE
+
+      var getTableId = window.subject[semnum][i].sem_id;
+      var getTheId = window.subject[semnum][i].course_id;
+
+      var checkBoxId = "check_"+(getTableId)+"_"+(getTheId);
+
+      console.log("Check box id"+checkBoxId)
+
+      var getCheckBox = document.getElementById(checkBoxId);
+
+      getCheckBox.checked = true;
+    }
+
+    
+  } else {
+    console.log("unchecked");
+
+    var table = document.getElementById("table" + getTableIndex);
+
+    var content = table.getElementsByTagName("tbody")[0];
+
+    for (var i = 0; i < content.rows.length; i++) {
+     content.rows[i].style.backgroundColor = "white";
+
+      
+      window.subject[semnum][i].taken = "false";
+
+       //SET THE CHECKBOX TO TRUE
+       var getTableId = window.subject[semnum][i].sem_id;
+       var getTheId = window.subject[semnum][i].course_id;
+ 
+       var checkBoxId = "check_"+(getTableId)+"_"+(getTheId);
+
+
+     console.log("Check box id"+checkBoxId)
+
+     var getCheckBox = document.getElementById(checkBoxId);
+
+     getCheckBox.checked = false;
+
+     console.log("sepatutnya delete");
+    }
+
+
+    
+    
+  }
+}
+
+function changeCheckbox(value) {
+  var fields = value.split("_");
+  var getTableIndex = fields[1];
+  var getIndex = fields[2];
+  var semnum;
+  var num;
+
+  for (i = 0; i < window.sem.length; i++) {
+    if (window.sem[i].sem_id == getTableIndex) {
+      semnum = i;
+    }
+  }
+
+  for (i = 0; i < window.subject[semnum].length; i++) {
+    if (window.subject[semnum][i].course_id == getIndex) {
+      num = i;
+    }
+  }
+
+  var decider = document.getElementById(value);
+  if (decider.checked) {
+    console.log("check");
+
+    var table = document.getElementById("table" + getTableIndex);
+
+    var content = table.getElementsByTagName("tbody")[0];
+
+    for (var i = 0; i < content.rows.length; i++) {
+      if (i == num) {
+        content.rows[i].style.backgroundColor = "#dddddd";
+      }
+    }
+
+    window.subject[semnum][num].taken = "true";
+  } else {
+    console.log("unchecked");
+
+    var table = document.getElementById("table" + getTableIndex);
+
+    var content = table.getElementsByTagName("tbody")[0];
+
+    for (var i = 0; i < content.rows.length; i++) {
+      if (i == num) {
+        content.rows[i].style.backgroundColor = "white";
+      }
+    }
+
+    window.subject[semnum][num].taken = "false";
   }
 }

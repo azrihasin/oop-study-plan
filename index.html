@@ -35,15 +35,15 @@
                     <ul class="nav__list">
                         <a href="#" class="nav__link active">
                             <i class="bx bx-grid-alt nav__icon"></i>
-                            <span class="nav__text">Home</span>
+                            <span class="nav__text">Available <br> Study Plan</span>
                         </a>
                         <a href="#" class="nav__link">
                             <i class="bx bx-user nav__icon"></i>
-                            <span class="nav__text">User</span>
+                            <span class="nav__text">Import Csv</span>
                         </a>
                         <a href="#" class="nav__link">
                             <i class="bx bx-bell nav__icon"></i>
-                            <span class="nav__text">Notification</span>
+                            <span class="nav__text">Export Csv</span>
                         </a>
                         <a href="#" class="nav__link">
                             <i class="bx bx-heart nav__icon"></i>
@@ -65,11 +65,16 @@
                 </a>
             </nav>
         </div>
-        <h1>Study Plan</h1>
-        <button id="check">Check Subject</button>
-        <button id="myBtn">Delete sem</button>
-        <input type="file" id="fileUpload" value="Upload">
-        <button onclick="download_csv()">Download Csv</button>
+
+        <div class="headerArea">
+
+            <h1>Study Plan</h1>
+            <button id="check">Check Subject</button>
+            <input type="file" id="fileUpload" value="">
+            <button onclick="download_csv()">Download Csv</button>
+
+        </div>
+       
         <!-- The Modal -->
         <div
             id="myModal" class="modal">
@@ -100,10 +105,10 @@
                         <input class="mul" type="text" name="" id="mulcourse" placeholder="Course ">
                         <input class="mul" type="text" name="" id="mulcredithour" placeholder="Credit Hour">
                     </div>
-              
+
                 </div>
                 <br>
-                <button onclick="muldone()" >Done</button>
+                <button onclick="muldone()">Done</button>
                 <button onclick="mulcancel()">Cancel</button>
             </div>
         </div>
@@ -179,6 +184,27 @@
             <script src="assets/js/script.js"></script>
             <script src="assets/js/studyplan.js"></script>
             <script>
+
+                function intializeSideBar() {
+
+                    var toggleId='nav-toggle';
+                    var navbarId='navbar';
+                    var bodyId='body';
+
+                    const toggle = document.getElementById(toggleId),
+                        navbar = document.getElementById(navbarId),
+                        bodypadding = document.getElementById(bodyId)
+
+                    navbar.classList.toggle('show')
+                    // ROTATE TOGGLE
+                    toggle.classList.toggle('rotate')
+                    // PADDING BODY
+                    bodypadding.classList.toggle('expander')
+                }
+                
+                intializeSideBar();               
+                
+                
                 [].forEach.call(document.querySelectorAll('.mdc-text-field'), function (el) {
                     mdc.textField.MDCTextField.attachTo(el);
                 });
