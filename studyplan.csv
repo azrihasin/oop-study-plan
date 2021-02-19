@@ -1,4 +1,9 @@
 sem_id,sem_name,course_id,course,course_code,credit_hour,taken
-0,First year First sem,0,computer,csc,3,FALSE
-0,First year First sem,0,computer,csc,3,FALSE
-1,First year Second sem,1234243,computer,info,3,FALSE
+0a008b00-c91f-45f1-a7c8-1a5035d90b16,table0,d3c560e5-2be3-4a2e-bdcc-d7cdd1f3bb76,Elements of Programming,CSC 1100 ,3,FALSE
+0a008b00-c91f-45f1-a7c8-1a5035d90b16,table0,b6f0821c-3129-42f2-8787-d5acb8e2a1ae,Database Systems,INFO 1103 ,3,FALSE
+0a008b00-c91f-45f1-a7c8-1a5035d90b16,table0,68dd039f-772a-41c9-8d27-b63ce7b7332f,Mathematics for Computing I ,CSC 1707 ,3,FALSE
+0a008b00-c91f-45f1-a7c8-1a5035d90b16,table0,30cd1054-bfb8-4c22-abec-53a4257febac,Business Fundamental ,INFO 1501 ,3,FALSE
+0a008b00-c91f-45f1-a7c8-1a5035d90b16,table0,ba06a186-29f1-424e-be34-f39b805e09d2,Tamadun Islam & Tamadun Asia Tenggara (,MPU 3122,2,FALSE
+0a008b00-c91f-45f1-a7c8-1a5035d90b16,table0,0cf26dd0-c541-443a-8f5d-966918e8b33b,Creative Thinking and Problem Solving,UNGS 2011 ,2,FALSE
+0a008b00-c91f-45f1-a7c8-1a5035d90b16,table0,d2404f78-c837-4318-ace3-df4a843fc2db,Tilawah Al-Quran I,TQ 1001 ,0.5,FALSE
+0a008b00-c91f-45f1-a7c8-1a5035d90b16,table0,7307c3e9-2af1-490a-a1fb-c17d1d429709,USRAH 1 ,CCCD 1611 ,0.5,FALSE
