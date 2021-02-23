@@ -45,26 +45,7 @@
                                 Study Plan
                             </span>
                         </a>
-                        <a href="#" class="nav__link">
-                            <i class="bx bx-user nav__icon"></i>
-                            <span class="nav__text">Import Csv</span>
-                        </a>
-                        <a href="#" class="nav__link">
-                            <i class="bx bx-bell nav__icon"></i>
-                            <span class="nav__text">Export Csv</span>
-                        </a>
-                        <a href="#" class="nav__link">
-                            <i class="bx bx-heart nav__icon"></i>
-                            <span class="nav__text">Hello</span>
-                        </a>
-                        <a href="#" class="nav__link">
-                            <i class="bx bx-bookmark nav__icon"></i>
-                            <span class="nav__text">Saved</span>
-                        </a>
-                        <a href="#" class="nav__link">
-                            <i class="bx bx-message-rounded nav__icon"></i>
-                            <span class="nav__text">Chat</span>
-                        </a>
+                       
                     </ul>
                 </div>
                 <a href="#" class="nav__link">
@@ -75,13 +56,28 @@
         </div>
         <div class="headerArea">
             <h1>Study Plan</h1>
-            <h6 id="calculateprogress">20/126</h6>
+            <h6 id="calculateprogress">0/0</h6>
             <div class="progress-bar">
                 <div id="progressbarid" class="progress-bar-grey" style="height:24px;width:0%"></div>
               </div>
             <button id="check">Check Subject</button>
-            <input type="file" id="fileUpload" value="">
-            <button onclick="download_csv()">Download Csv</button>
+    
+            <label class="mdc-button mdc-button--raised" for="fileUpload">
+                <span class="mdc-button__ripple"></span>
+                <input type="file" id="fileUpload" style="display:none">
+                Upload Csv</label>
+           
+
+
+            <button onclick="download_csv()" class="done mdc-button mdc-button--raised">               
+                <span class="mdc-button__label">Download Csv</span>
+            </button>
+
+
+            <button onclick="resetStudyPlan()" class="mdc-button mdc-button--outlined">
+                <span class="mdc-button__ripple"></span>
+                <span class="mdc-button__label">Reset StudyPlan</span>
+              </button>
         </div>
 
 
@@ -90,11 +86,18 @@
             id="mulModal" class="mulmodal">
             <!-- Modal content -->
             <div class="mulmodal-content">
-                <span class="mulclose">&times;</span>
-                <h6>Add Multiple Subject</h6>
+                <div class="mulHeader">
+                    <span class="mulclose">&times;</span>
+                    <h6>Add Multiple Subject</h6>
+                </div>                
                 <br>
-                <button onclick="muladdsubjectarea()">Add</button>
-                <button onclick="muldeletesubjectarea()">Delete</button>
+                <button onclick="muladdsubjectarea()" class="mdc-button mdc-button--raised" >
+                    <span class="mdc-button__label">Add</span>
+                </button>
+                <button onclick="muldeletesubjectarea()"class="mdc-button mdc-button--raised" >
+                    <span class="mdc-button__label">Delete</span>
+                </button>
+           
                 <br>
                 <div id="mularea">
                     <div>
@@ -104,18 +107,25 @@
                     </div>
                 </div>
                 <br>
-                <button onclick="muldone()">Done</button>
-                <button onclick="mulcancel()">Cancel</button>
+                <div style="float:right;margin-bottom:100px">
+                    <button onclick="muldone()" class="mdc-button mdc-button--raised" >
+                        <span class="mdc-button__label">Done</span>
+                    </button>
+                    <button onclick="mulcancel()" class="cancel mdc-button">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label">Cancel</span>
+                    </button>
+                </div>
             </div>
         </div>
 
 
-         <!-- Modal for multiple add -->
+         <!-- Modal for avaialable studyplan -->
          <div id="chooseModal" class="chooseModal">
          <!-- Modal content -->
          <div class="chooseModal-content">
              <span class="choosemodalclose">&times;</span>
-             <h6>Add Multiple Subject</h6>
+             <h3>Available study plan</h3>
              <br>
             <button id="uia_it">Information technology(UIA)</button>
              <br>

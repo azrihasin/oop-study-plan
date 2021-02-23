@@ -154,42 +154,9 @@ function createTableByUrl(newdata){
             window.subject = [];
 
             //BUILD THE TABLE
-
-            console.log("Get sem " + getSem);
-
-            for (i = 0; i < getSem.length; i++) {
-              console.log("Pass through this build table");
-              console.log(csvData[i][0]);
-              if (getSem.length == 0) {
-                window.sem[0] = new Sem(csvData[i][0], "table" + csvData[i][0]);
-              } else {
-                window.sem.push(new Sem(csvData[i][0], csvData[i][1]));
-              }
-
-              buildSem(csvData[i][0], i);
-
-              for (j = 0; j < csvData.length; j++) {
-                var s_id = csvData[j][0];
-                var s_name = csvData[j][1];
-                var c_id = csvData[j][2];
-                var c_name = csvData[j][3];
-                var c_code = csvData[j][4];
-                var c_hour = csvData[j][5];
-                var taken = csvData[j][6];
-
-                if (j == 0) {
-                  window.subject[0] = [];
-                } else {
-                  window.subject.push([]);
-                }
-
-                window.subject[i].push(
-                  new Subject(s_id, s_name, c_id, c_name, c_code, c_hour, taken)
-                );
-
-                buildSubject(c_id, c_name, c_code, c_hour, s_id);
-              }
-            }
+            generateArray(csvData);
+            generateAllBuild();
+   
           } else {
             console.log("The table change cancelled");
           }
@@ -233,45 +200,12 @@ function createTableByUrl(newdata){
           console.log("Sem length :" + getSem.length);
 
           //BUILD THE TABLE
-
-          console.log("Get sem " + getSem);
-
-          for (i = 0; i < getSem.length; i++) {
-            console.log("Pass through this build table");
-            console.log(csvData[i][0]);
-            if (getSem.length == 0) {
-              window.sem[0] = new Sem(csvData[i][0], "table" + csvData[i][0]);
-            } else {
-              window.sem.push(new Sem(csvData[i][0], csvData[i][1]));
-            }
-
-            buildSem(csvData[i][0], i);
-
-            for (j = 0; j < csvData.length; j++) {
-              var s_id = csvData[j][0];
-              var s_name = csvData[j][1];
-              var c_id = csvData[j][2];
-              var c_name = csvData[j][3];
-              var c_code = csvData[j][4];
-              var c_hour = csvData[j][5];
-              var taken = csvData[j][6];
-
-              if (j == 0) {
-                window.subject[0] = [];
-              } else {
-                window.subject.push([]);
-              }
-
-              window.subject[i].push(
-                new Subject(s_id, s_name, c_id, c_name, c_code, c_hour, taken)
-              );
-
-              buildSubject(c_id, c_name, c_code, c_hour, s_id);
-            }
-          }
+          generateArray(csvData);
+          generateAllBuild();
+      
         }
 
-        console.log(csvData[1]);
+  
 
 
         choosemodal.style.display = "none";

@@ -229,7 +229,7 @@ tr:nth-child(even) {
   margin: 1.5rem;
   padding: 3rem;
   background-color: white;
-  border-radius: 20px;
+  border-radius: 7px;
 }
 
 /* mdl - popup */
@@ -269,9 +269,10 @@ tr:nth-child(even) {
   width: auto;
   height: auto;
   box-shadow: 0 25px 35px 0 rgba(0, 0, 0, 0.35);
-  top: 10%;
+  top: 15%;
   right: calc(50% - 250px);
-  padding-bottom: 2rem;
+  padding:1.5em;
+  border-radius: 7px;
 }
 
 .fab-icon {
@@ -310,11 +311,15 @@ tr:nth-child(even) {
 #fab-hdr {
   position: absolute;
   width: 100%;
-  background: #d35400;
+  background: none;
 }
 
 #fab-hdr h3 {
-  padding-left: 30px;
+  margin-top: 0.9em;
+  margin-bottom: 0.5em;
+  font-size: 3rem;
+  padding-left: 1em;
+  color: #6200EE;
 }
 
 .cntt {
@@ -325,7 +330,20 @@ tr:nth-child(even) {
 /* MULTIPLE ADD CSS */
 
 /* The Modal (background) */
+
+
+.mulHeader{
+  font-size: 30px;
+  color:  #6200EE;
+}
+
+.mulHeader h6{
+  font-size: 3rem;
+}
+
+
 .mulmodal {
+  
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -336,15 +354,19 @@ tr:nth-child(even) {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+
 }
 
 /* Modal Content/Box */
 .mulmodal-content {
+  border-radius: 7px;
+  padding: 3em;
+  padding-bottom: 4rem;
   background-color: #fefefe;
   margin: 10% auto; /* 15% from the top and centered */
-  padding: 20px;
   border: 1px solid #888;
-  width: 40%; /* Could be more or less, depending on screen size */
+  width: 60%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */
@@ -369,7 +391,7 @@ tr:nth-child(even) {
   border: 1px solid gray;
   border-radius: 5px;  
   padding: 1rem 0.7rem;
-  color: gray;
+  color: black;
   transition: 0.1s ease-out;
 }
 .mul:focus {
@@ -397,6 +419,11 @@ tr:nth-child(even) {
   padding: 20px;
   border: 1px solid #888;
   width: 30%; /* Could be more or less, depending on screen size */
+  border-radius: 7px;
+}
+
+.chooseModal-content button {
+  margin: 1em;
 }
 
 /* The Close Button */
@@ -604,12 +631,22 @@ textarea{
 
 .headerArea{
   margin-bottom: 1rem;
+  margin-left: 2rem;
+  margin-right: 3rem;
   background-color: white;
   padding-top: 0.1rem;
   padding-bottom: 1.5rem;
   padding-left: 1.8rem;
   padding-right: 1.5rem;
   border-radius: 7px;
+}
+
+.headerArea button{
+  margin: 0.5rem;  
+}
+
+.headerArea label{
+  margin: 0.5rem;  
 }
 /* PROGRESS BAR */
 
