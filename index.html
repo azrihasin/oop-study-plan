@@ -247,11 +247,14 @@
                 $(document).ready(function () {
                     var valueCookies = getCookiesAll();
                     console.log(valueCookies);
+
+                    var dataarr = JSON.parse(valueCookies);
+
                     if (valueCookies == null) {
                         alert("fail");
                     } else {
-                        console.log("Cookies length" +valueCookies.length);
-                        for (var i = 0; i < valueCookies.length; i++) {
+                        console.log("Cookies length" + dataarr.length);
+                        for (var i = 0; i < dataarr.length; i++) {
                             var name = "table"+i;
                             console.log("Table name"+ name);
                             doSomething(name);
