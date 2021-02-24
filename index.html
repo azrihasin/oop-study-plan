@@ -245,13 +245,16 @@
                 // cookies
 
                 $(document).ready(function () {
-                    var valueCookies = getCookies();
+                    var valueCookies = getCookiesAll();
                     if (valueCookies == null) {
                         alert("fail");
                     } else {
+                        console.log("Cookies length" +valueCookies.length);
                         for (var i = 0; i < valueCookies.length; i++) {
                             var name = "table"+i;
+                            console.log("Table name"+ name);
                             doSomething(name);
+                            
                         }
 
                         console.log(window.subject);
@@ -328,7 +331,7 @@
 
                 }
 
-                function getCookies() {
+                function getCookiesAll() {
                     var pairs = document.cookie.split(";");
                     var cookies = {};
                     for (var i = 0; i < pairs.length; i++) {
@@ -361,7 +364,7 @@
                alert("hello");
                console.log(arr);
                console.log("size"+( roughObjSize = JSON.stringify(bigObject).length));
-            }
+            }*/
             
             function getCookie(c_name) {
                 if (document.cookie.length > 0) {
@@ -376,7 +379,7 @@
                     }
                 }
                 return "";
-            }*/
+            }
             </script>
         </body>
         <!-- MAIN JS -->
