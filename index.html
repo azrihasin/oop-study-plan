@@ -248,13 +248,13 @@
                     var valueCookies = getCookiesAll();
                     console.log(valueCookies);
 
-                    var dataarr = JSON.parse(valueCookies);
+                    console.log(typeof(valueCookies));
 
                     if (valueCookies == null) {
                         alert("fail");
                     } else {
                         console.log("Cookies length" + dataarr);
-                        for (var i = 0; i < dataarr.length; i++) {
+                        for (var i = 0; i < valueCookies.length; i++) {
                             var name = "table"+i;
                             console.log("Table name"+ name);
                             doSomething(name);
