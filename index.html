@@ -242,9 +242,10 @@
 
              //cookies
 
-             /*$(document).ready(function () {
-                getArrayCookies();
-              });*/
+             $(document).ready(function () {
+                var valueCookies = getCookies();
+                console.log(valueCookies);
+              });
 
              function cookieManagement(){
                 for(var i=0;i<window.subject.length;i++){
