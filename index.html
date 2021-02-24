@@ -248,10 +248,10 @@
                     var valueCookies = getCookies();
                     console.log(valueCookies);
                     if (valueCookies == null) {
-                        ;
+                        alert("fail");
                     } else {
                         for (var i = 0; i < valueCookies.length; i++) {
-                            var name = "table" + i;
+                            var name = "table"+i;
                             doSomething(name);
                         }
 
