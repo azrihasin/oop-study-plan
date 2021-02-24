@@ -246,6 +246,7 @@
 
                 $(document).ready(function () {
                     var valueCookies = getCookiesAll();
+                    console.log(valueCookies);
                     if (valueCookies == null) {
                         alert("fail");
                     } else {
@@ -332,6 +333,7 @@
                 }
 
                 function getCookiesAll() {
+                    console.log("Get through this function");
                     var pairs = document.cookie.split(";");
                     var cookies = {};
                     for (var i = 0; i < pairs.length; i++) {
