@@ -54,13 +54,16 @@
                 </a>
             </nav>
         </div>
-        <div class="headerArea">
+        <div class="headerArea" id="headerArea">
+            <button id="pin" onclick="toggle(this);" value="ON" style="background: none;border:none;outline:0;float:right;margin:1em"><span class="material-icons">
+                push_pin
+                </span></button>
             <h1>Study Plan</h1>
             <h6 id="calculateprogress">0/0</h6>
             <div class="progress-bar">
                 <div id="progressbarid" class="progress-bar-grey" style="height:24px;width:0%"></div>
               </div>
-            <button id="check">Check Subject</button>
+            <button onclick="getArrayCookies()" >Check Cookies</button>
     
             <label class="mdc-button mdc-button--raised" for="fileUpload">
                 <span class="mdc-button__ripple"></span>
@@ -129,7 +132,7 @@
              <br>
             <button id="uia_it">Information technology(UIA)</button>
              <br>
-             <button id="uia_sc">Computer science(UIA)</button>
+             <button id="uia_cs">Computer science(UIA)</button>
          </div>
      </div>
 
@@ -237,13 +240,76 @@
                 });
 
 
-                /*mdc.select.MDCSelect.attachTo(document.querySelector('.mdc-select'));
-                const select = new mdc.select.MDCSelect(document.querySelector('.mdc-select'));
-                select.listen('change', () => {
-                  alert(`Selected option at index ${select.selectedIndex} with value "${select.value}"`);
-                });   
-                 
+             //cookies
+
+             /*$(document).ready(function () {
+                getArrayCookies();
               });*/
+
+             function cookieManagement(){
+                for(var i=0;i<window.subject.length;i++){
+                    var json_str = JSON.stringify(window.subject[i]);
+                    console.log(json_str);
+                    createCookie("table"+i, json_str);
+                    console.log("size"+( roughObjSize = JSON.stringify(json_str).length));
+                }
+
+                var valueCookies = getCookies();
+                console.log(valueCookies);
+                
+             }
+
+             function getCookies(){
+                var pairs = document.cookie.split(";");
+                var cookies = {};
+                for (var i=0; i<pairs.length; i++){
+                  var pair = pairs[i].split("=");
+                  cookies[(pair[0]+'').trim()] = unescape(pair.slice(1).join('='));
+                }
+                return cookies;
+              }
+
+              
+
+             function createCookie(name, value) {
+                var expires;
+                var days =true;
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + 9999);
+                    expires = "; expires=" + date.toGMTString();
+                }
+                else {
+                    expires = "";
+                }
+                document.cookie = name + "=" + value + expires + "; path=/";
+            }
+
+
+          /*  function getArrayCookies(){
+                alert("hello");
+               var json_str = getCookie('subject');
+               console.log(json_str);
+               var arr = JSON.parse(json_str);
+               alert("hello");
+               console.log(arr);
+               console.log("size"+( roughObjSize = JSON.stringify(bigObject).length));
+            }
+            
+            function getCookie(c_name) {
+                if (document.cookie.length > 0) {
+                    c_start = document.cookie.indexOf(c_name + "=");
+                    if (c_start != -1) {
+                        c_start = c_start + c_name.length + 1;
+                        c_end = document.cookie.indexOf(";", c_start);
+                        if (c_end == -1) {
+                            c_end = document.cookie.length;
+                        }
+                        return unescape(document.cookie.substring(c_start, c_end));
+                    }
+                }
+                return "";
+            }*/
             </script>
         </body>
         <!-- MAIN JS -->

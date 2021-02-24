@@ -71,7 +71,8 @@ window.onclick = function (event) {
 $(document).ready(function () {
   $("#uia_it").click(function () {
     $.ajax({
-      url: "https://azrihasin.github.io/oop-study-plan/studyplan.csv",
+      url:
+        "https://azrihasin.github.io/oop-study-plan/assets/available_studyplan/bit_uia.csv",
       dataType: "text",
       success: function (newdata) {
         createTableByUrl(newdata);
@@ -80,133 +81,158 @@ $(document).ready(function () {
   });
 });
 
+$(document).ready(function () {
+  $("#uia_cs").click(function () {
+    $.ajax({
+      url:
+        "https://azrihasin.github.io/oop-study-plan/assets/available_studyplan/bcs_uia.csv",
+      dataType: "text",
+      success: function (newdata) {
+        createTableByUrl(newdata);
+      },
+    });
+  });
+});
 
-
-function createTableByUrl(newdata){
+function createTableByUrl(newdata) {
   data = [];
 
-        var csvData = new Array();
-        console.log(data);
-        var rows = newdata.split("\n");
-        for (var i = 1; i < rows.length; i++) {
-          if (rows[i].match(/^[,\s]*$/)) {
-            continue;
-          }
+  var csvData = new Array();
+  console.log(data);
+  var rows = newdata.split("\n");
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i].match(/^[,\s]*$/)) {
+      continue;
+    }
 
-          csvData.push(rows[i].split(","));
-        }
-        //CHECK IF THE TABLE IS EMPTY OR NOT
-        if (window.sem.length > 0) {
-          var check = confirm("All the existing table will be deleted");
-          if (check == true) {
-            console.log("The table will be inserted now");
+    csvData.push(rows[i].split(","));
+  }
+  //CHECK IF THE TABLE IS EMPTY OR NOT
+  if (window.sem.length > 0) {
+    var check = confirm("All the existing table will be deleted");
+    if (check == true) {
+      console.log("The table will be inserted now");
 
-            //CSV DATA TO ARRAY AND CHECK HOW MANY SEM
-            var newarray = csvData.map(function (value, index) {
-              console.log("Csv data" + csvData[index][0]);
+      //CSV DATA TO ARRAY AND CHECK HOW MANY SEM
+      var newarray = csvData.map(function (value, index) {
+        console.log("Csv data" + csvData[index][0]);
 
-              var reg = /^[0-9]*[.]?[0-9]*$/;
+        var reg = /^[0-9]*[.]?[0-9]*$/;
 
-              // console.log(reg.test(csvData[index][0]));
-              // if (reg.test(csvData[index][0])) {
-              //   return csvData[index][0];
-              // }
+        // console.log(reg.test(csvData[index][0]));
+        // if (reg.test(csvData[index][0])) {
+        //   return csvData[index][0];
+        // }
 
-              return csvData[index][0];
-            });
+        return csvData[index][0];
+      });
 
-            // REFINE AND REMOVE THE UNDEFINED VALUE
+      // REFINE AND REMOVE THE UNDEFINED VALUE
 
-            var selectlist = document.getElementById("semoption");
+      var selectlist = document.getElementById("semoption");
 
-            var rows = selectlist.getElementsByTagName("option");
-            while (rows.length > 1) {
-              rows[1].parentNode.removeChild(rows[1]);
-            }
+      var rows = selectlist.getElementsByTagName("option");
+      while (rows.length > 1) {
+        rows[1].parentNode.removeChild(rows[1]);
+      }
 
-            var data = newarray.filter(function (element) {
-              return element !== undefined;
-            });
+      var data = newarray.filter(function (element) {
+        return element !== undefined;
+      });
 
-            console.log(data);
+      console.log(data);
 
-            var getSem;
+      var getSem;
 
-            getSem = [...new Set(data)];
+      getSem = [...new Set(data)];
 
-            console.log("Sem length :" + getSem.length);
+      console.log("Sem length :" + getSem.length);
 
-            //REMOVE ALL ELEMENT
+      //REMOVE ALL ELEMENT
 
-            for (var i = 0; i < window.sem.length; i++) {
-              var tableIndex = window.sem[i].sem_id;
-              var tbl = document.getElementById("table" + tableIndex);
-              tbl.remove();
+      for (var i = 0; i < window.sem.length; i++) {
+        var tableIndex = window.sem[i].sem_id;
+        var tbl = document.getElementById("table" + tableIndex);
+        tbl.remove();
 
-              document
-                .getElementById("card" + tableIndex)
-                .parentElement.remove();
-            }
+        document.getElementById("card" + tableIndex).parentElement.remove();
+      }
 
-            //REMOVE ALL ARRAY
+      //REMOVE ALL ARRAY
 
-            window.sem = [];
-            window.subject = [];
+      window.sem = [];
+      window.subject = [];
 
-            //BUILD THE TABLE
-            generateArray(csvData);
-            generateAllBuild();
-   
-          } else {
-            console.log("The table change cancelled");
-          }
-        } else {
-          console.log("Table inserted");
-          console.log("The table will be inserted now");
+      //BUILD THE TABLE
+      generateArray(csvData);
+      generateAllBuild();
+    } else {
+      console.log("The table change cancelled");
+    }
+  } else {
+    console.log("Table inserted");
+    console.log("The table will be inserted now");
 
-          //CSV DATA TO ARRAY AND CHECK HOW MANY SEM
-          var newarray = csvData.map(function (value, index) {
-            console.log("Csv data" + csvData[index][0]);
+    //CSV DATA TO ARRAY AND CHECK HOW MANY SEM
+    var newarray = csvData.map(function (value, index) {
+      console.log("Csv data" + csvData[index][0]);
 
-            var reg = /^[0-9]*[.]?[0-9]*$/;
+      var reg = /^[0-9]*[.]?[0-9]*$/;
 
-            // console.log(reg.test(csvData[index][0]));
-            // if (reg.test(csvData[index][0])) {
-            //   return csvData[index][0];
-            // }
+      // console.log(reg.test(csvData[index][0]));
+      // if (reg.test(csvData[index][0])) {
+      //   return csvData[index][0];
+      // }
 
-            return csvData[index][0];
-          });
+      return csvData[index][0];
+    });
 
-          // REFINE AND REMOVE THE UNDEFINED VALUE
+    // REFINE AND REMOVE THE UNDEFINED VALUE
 
-          var selectlist = document.getElementById("semoption");
+    var selectlist = document.getElementById("semoption");
 
-          var rows = selectlist.getElementsByTagName("option");
-          while (rows.length > 1) {
-            rows[1].parentNode.removeChild(rows[1]);
-          }
+    var rows = selectlist.getElementsByTagName("option");
+    while (rows.length > 1) {
+      rows[1].parentNode.removeChild(rows[1]);
+    }
 
-          var data = newarray.filter(function (element) {
-            return element !== undefined;
-          });
+    var data = newarray.filter(function (element) {
+      return element !== undefined;
+    });
 
-          console.log(data);
+    console.log(data);
 
-          var getSem;
+    var getSem;
 
-          getSem = [...new Set(data)];
+    getSem = [...new Set(data)];
 
-          console.log("Sem length :" + getSem.length);
+    console.log("Sem length :" + getSem.length);
 
-          //BUILD THE TABLE
-          generateArray(csvData);
-          generateAllBuild();
-      
-        }
+    //BUILD THE TABLE
+    generateArray(csvData);
+    generateAllBuild();
+  }
 
-  
+  choosemodal.style.display = "none";
+  cookieManagement();
+}
 
+function toggle() {
 
-        choosemodal.style.display = "none";
+  if (document.getElementById("pin").value == "OFF") {
+    document.getElementById("pin").value = "ON";
+    document.getElementById("pin").style.opacity = "1";
+    var header = document.getElementById("headerArea"); 
+    header.style.position = "static";
+    header.style.top ="0";
+    console.log("true");
+  } else {
+    document.getElementById("pin").value = "OFF";
+    document.getElementById("pin").style.opacity = "0.4";
+
+    var header = document.getElementById("headerArea"); 
+    header.style.position = "sticky";
+    header.style.top ="2em";
+    console.log("false");
+  }
 }

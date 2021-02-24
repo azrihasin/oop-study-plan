@@ -38,13 +38,13 @@ subject = [];
 console.log(sem.length);
 console.log(subject.length);
 
-document.getElementById("check").onclick = function () {
-  console.log(window.sem);
-  array = window.subject;
-  for (i = 0; i < array.length; i++) {
-    for (j = 0; j < array[i].length; j++) console.log(array[i][j]);
-  }
-};
+// document.getElementById("check").onclick = function () {
+//   console.log(window.sem);
+//   array = window.subject;
+//   for (i = 0; i < array.length; i++) {
+//     for (j = 0; j < array[i].length; j++) console.log(array[i][j]);
+//   }
+// };
 
 function addSem() {
   //INDEX OF TABLE

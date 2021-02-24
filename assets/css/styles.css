@@ -630,6 +630,7 @@ textarea{
 /* HEADER BAR */
 
 .headerArea{
+  z-index: 1;
   margin-bottom: 1rem;
   margin-left: 2rem;
   margin-right: 3rem;
@@ -660,6 +661,10 @@ textarea{
 .progress-bar-grey{
   background-color: #6200EE;
   border-radius: 5px;
+}
+
+#pin:hover{
+  cursor: pointer;
 }
 
 
