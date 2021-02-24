@@ -246,7 +246,6 @@
 
                 $(document).ready(function () {
                     var valueCookies = getCookies();
-                    console.log(valueCookies);
                     if (valueCookies == null) {
                         alert("fail");
                     } else {
@@ -254,6 +253,8 @@
                             var name = "table"+i;
                             doSomething(name);
                         }
+
+                        console.log(window.subject);
 
                         var getCsv = cookieCsv(window.subject);
 
@@ -278,8 +279,6 @@
 
                     // push to array
                     window.subject.push(arr);
-
-
                 }
 
                 function cookieCsv(cookievalue) {
@@ -325,7 +324,7 @@
                     }
 
                     var valueCookies = getCookies();
-                    console.log(valueCookies);
+                 
 
                 }
 
