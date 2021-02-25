@@ -1675,5 +1675,7 @@ function resetStudyPlan() {
     //REMOVE ALL ARRAY
     window.sem = [];
     window.subject = [];
+    progressBar();
+    cookieManagement();
   }
 }
