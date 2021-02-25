@@ -286,7 +286,9 @@
 
                             console.log("This is important "+value);
                             
-                            changeCheckbox(value);
+                            if(window.subject[i][j].taken=="true"){
+                                document.getElementById(value).checked = true;
+                            }
                         }
                         
                     }
