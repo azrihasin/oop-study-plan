@@ -349,6 +349,7 @@ function getValue() {
     calculateTotalCredit(index);
     calculateTotalCreditTaken(index);
     progressBar();
+    cookieManagement();
   }
 }
 
@@ -715,6 +716,7 @@ function doneeditsubject(geteditid) {
     getValue();
   }
   progressBar();
+  cookieManagement();
 }
 
 function deleteSem(value) {
@@ -755,6 +757,7 @@ function deleteSem(value) {
       window.subject.splice(j, 1);
     }
     progressBar();
+    cookieManagement();
   }
 }
 
@@ -1349,6 +1352,7 @@ function muldone() {
 
     getValue();
     progressBar();
+    cookieManagement();
   }
 
   //RESET THE AREA BACK
@@ -1381,6 +1385,12 @@ function mulcancel() {
 //OPEN MODAL ADD SUBJECT
 function openModalAddSubject(tableId) {
   window.currentTable = tableId;
+
+  document.getElementById("coursenameinput").value="";
+
+  document.getElementById("coursecodeinput").value="";
+
+  document.getElementById("credithourinput").value="";
 
   setOptionToCurrent();
 
@@ -1481,6 +1491,7 @@ function changeCheckboxForAll(value) {
     calculateTotalCreditTaken(semnum);
 
     progressBar();
+    cookieManagement();
   } else {
     console.log("unchecked");
 
@@ -1508,6 +1519,7 @@ function changeCheckboxForAll(value) {
 
     calculateTotalCreditTaken(semnum);
     progressBar();
+    cookieManagement();
   }
 }
 
@@ -1548,6 +1560,7 @@ function changeCheckbox(value) {
 
     calculateTotalCreditTaken(semnum);
     progressBar();
+    cookieManagement();
   } else {
     console.log("unchecked");
 
@@ -1565,6 +1578,7 @@ function changeCheckbox(value) {
 
     calculateTotalCreditTaken(semnum);
     progressBar();
+    cookieManagement();
   }
 }
 
