@@ -744,7 +744,6 @@ function deleteSem(value) {
     }
 
     var tbl = document.getElementById("table" + tableIndex);
-    // if(tbl) tbl.parentNode.removeChild(tbl);
     tbl.remove();
 
     document.getElementById("card" + tableIndex).parentElement.remove();
@@ -756,8 +755,11 @@ function deleteSem(value) {
     //DELETE SPLICE ALL THE ELEMENT IN ARRAY
     for (j = 0; j < window.subject[index].length; j++) {
       window.subject[index].splice(j, 1);
-      window.subject.splice(j, 1);
     }
+
+    window.subject.splice(index, 1);
+
+    console.log(window.subject);
 
    
   }
@@ -1469,11 +1471,13 @@ function changeCheckboxForAll(value) {
 
     var table = document.getElementById("table" + getTableIndex);
 
+
+
     var content = table.getElementsByTagName("tbody")[0];
 
     for (var i = 0; i < content.rows.length; i++) {
       content.rows[i].style.backgroundColor = "#dddddd";
-
+      
       window.subject[semnum][i].taken = "true";
 
       //SET THE CHECKBOX TO TRUE
