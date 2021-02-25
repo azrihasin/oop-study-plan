@@ -287,17 +287,19 @@
 
                         var value = "checkboxall_" + window.subject[i][0].sem_id ;
 
-                        for (var j = 0; j < window.subject[i].length; j++) {                            
+                        for (var j = 0; j < window.subject[i].length; j++) {                           
 
-                            console.log("This is important " + value);
+                            
 
                             if (window.subject[i][j].taken == "false") {
 
-
+                                console.log("there is false" + window.subject[i][j]);
                                 dontTick = "false"; 
         
                             }
                         }
+
+                        console.log("This is important " + value);
 
                         if(dontTick = "false"){
                             document.getElementById(value).checked = false;
@@ -316,8 +318,6 @@
                         for (var j = 0; j < window.subject[i].length; j++) {
 
                             var value = "check_" + window.subject[i][j].sem_id + "_" + window.subject[i][j].course_id;
-
-                            console.log("This is important " + value);
 
                             if (window.subject[i][j].taken == "true") {
                                 document.getElementById(value).checked = true;
