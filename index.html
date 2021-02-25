@@ -293,7 +293,7 @@
 
                             if (window.subject[i][j].taken == "false") {
 
-                                console.log("there is false" + window.subject[i][j]);
+                                console.log("there is false" + window.subject[i][j].sem_id);
                                 dontTick = "false"; 
         
                             }
@@ -303,7 +303,7 @@
 
                         if(dontTick = "false"){
                             document.getElementById(value).checked = false;
-                        }else{
+                        }else if(dontTick == "true" ){
                             document.getElementById(value).checked = true;
                         }                  
 
@@ -392,7 +392,7 @@
                     console.log("Cookies Saved");
                     for (var i = 0; i < window.subject.length; i++) {
                         var json_str = JSON.stringify(window.subject[i]);
-                        console.log(json_str);
+                 
                         createCookie("table" + i, json_str);
                         console.log("size" + (
                             roughObjSize = JSON.stringify(json_str).length
