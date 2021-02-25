@@ -251,7 +251,7 @@
                     console.log(typeof(valueCookies));
 
                     if (valueCookies == null) {
-                       console.log("No cookies");
+                        console.log("No cookies");
                     } else {
 
                         var keys = Object.keys(valueCookies);
@@ -274,23 +274,66 @@
                     }
                 });
 
-                function cookieProgressBar(){
+                function cookieProgressBar() {
 
                     console.log("get thorugh progress bar");
 
-                    for(var i = 0 ; i<window.subject.length;i++){
 
-                        for(var j = 0 ; j<window.subject[i].length;j++){
+                    //set checkbox to true every sem
 
-                            var value = "check_" +window.subject[i][j].sem_id + "_" + window.subject[i][j].course_id;
+                    for (var i = 0; i < window.subject.length; i++) {
 
-                            console.log("This is important "+value);
-                            
-                            if(window.subject[i][j].taken=="true"){
-                                document.getElementById(value).checked = true;
+                        var dontTick = "true" ;
+
+                        var value = "checkboxall_" + window.subject[i][0].sem_id ;
+
+                        for (var j = 0; j < window.subject[i].length; j++) {                            
+
+                            console.log("This is important " + value);
+
+                            if (window.subject[i][j].taken == "false") {
+
+
+                                dontTick = "false"; 
+        
                             }
                         }
-                        
+
+                        if(dontTick = "false"){
+                            document.getElementById(value).checked = false;
+                        }else{
+                            document.getElementById(value).checked = true;
+                        }                  
+
+
+                    }
+
+
+                    //set checkbox to true every subject
+
+                    for (var i = 0; i < window.subject.length; i++) {
+
+                        for (var j = 0; j < window.subject[i].length; j++) {
+
+                            var value = "check_" + window.subject[i][j].sem_id + "_" + window.subject[i][j].course_id;
+
+                            console.log("This is important " + value);
+
+                            if (window.subject[i][j].taken == "true") {
+                                document.getElementById(value).checked = true;
+
+                                var table = document.getElementById("table" + window.subject[i][j].sem_id);
+
+                                var content = table.getElementsByTagName("tbody")[0];
+
+                                for (var x = 0; x < content.rows.length; x++) {
+                                    if (x == j) {
+                                        content.rows[x].style.backgroundColor = "#dddddd";
+                                    }
+                                }
+                            }
+                        }
+
                     }
                 }
 
@@ -356,7 +399,7 @@
                         ));
                     }
 
-                    //Read cookie that have been created
+                    // Read cookie that have been created
                     var valueCookies = getCookiesAll();
 
 
