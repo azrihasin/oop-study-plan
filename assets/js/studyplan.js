@@ -723,6 +723,8 @@ function deleteSem(value) {
   var r = confirm("Confirm delete?");
   if (r == true) {
     deleteAction();
+    progressBar();
+    cookieManagement();
   } else {
     console.log("You pressed Cancel!");
   }
@@ -756,8 +758,8 @@ function deleteSem(value) {
       window.subject[index].splice(j, 1);
       window.subject.splice(j, 1);
     }
-    progressBar();
-    cookieManagement();
+
+   
   }
 }
 
