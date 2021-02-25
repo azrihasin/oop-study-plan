@@ -293,7 +293,7 @@
 
                             if (window.subject[i][j].taken == "false") {
 
-                                
+                                console.log("this subject flase "+window.subject[i][j].course);
                                 dontTick = "false"; 
         
                             }
@@ -302,10 +302,10 @@
                         console.log("Dont tick value "+ dontTick);
 
                         if(dontTick = "false"){
-                            console.log("this table flase "+window.subject[i].sem_name);
+                            console.log("this table flase "+window.subject[i][0].sem_name);
                             document.getElementById(value).checked = false;
                         }else if(dontTick == "true" ){
-                            console.log("this table true "+window.subject[i].sem_name);
+                            console.log("this table true "+window.subject[i][0].sem_name);
                             document.getElementById(value).checked = true;
                         }                  
 
