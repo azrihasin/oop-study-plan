@@ -282,7 +282,9 @@
 
                         for(var j = 0 ; j<window.subject[i].length;j++){
 
-                            var value = "check_" +window.subject[i].sem_id + "_" + window.subject[i].course_id;
+                            var value = "check_" +window.subject[i][j].sem_id + "_" + window.subject[i][j].course_id;
+
+                            console.log("This is important "+value);
                             
                             changeCheckbox(value);
                         }
