@@ -66,7 +66,7 @@
             <div class="progress-bar">
                 <div id="progressbarid" class="progress-bar-grey" style="height:24px;width:0%"></div>
             </div>
-            
+
             <label class="mdc-button mdc-button--raised" for="fileUpload">
                 <span class="mdc-button__ripple"></span>
                 <input type="file" id="fileUpload" style="display:none">
@@ -241,9 +241,35 @@
                 });
 
 
-                // cookies
+                sem = [];
+                subject = [];
 
                 $(document).ready(function () {
+
+
+                    var data = JSON.parse(localStorage.getItem("subject"));
+
+                    data = window.subject;
+
+                    if (data.length > 0) {
+                        generateAllBuild();
+                    }
+
+
+                });
+
+                function cookieManagement() {
+
+                    localStorage.setItem("subject", JSON.stringify(window.subject));
+
+
+                    console.log("Local storage Saved");
+
+                };
+
+                // cookies
+
+                /*$(document).ready(function () {
                     var valueCookies = getCookiesAll();
                     console.log(valueCookies);
 
@@ -276,7 +302,7 @@
                     }
                 });
 
-                function cookieProgressBar() {
+                   function cookieProgressBar() {
 
                     console.log("get thorugh progress bar");
 
@@ -341,7 +367,6 @@
                     }
                 }
 
-
                 function doSomething(name) {
 
                     var myCookie = getCookie(name);
@@ -396,6 +421,39 @@
                     return csv;
                 }
 
+                function cookieManagement() {
+                    deleteAllCookies();
+                    
+                    for (var i = 0; i < window.subject.length; i++) {
+                        var json_str = JSON.stringify(window.subject[i]);
+                  
+                        createCookie("table" + i, json_str);
+                        console.log("size" + (
+                            roughObjSize = JSON.stringify(json_str).length
+                        ));
+                  
+                  
+                    }
+                  
+                    // Read cookie that have been created
+                    var valueCookies = getCookiesAll();
+                  
+                  console.log("Cookies Saved");
+                  }
+                  
+                  function deleteAllCookies() {
+                    var cookies = document.cookie.split(";");
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i];
+                        var eqPos = cookie.indexOf("=");
+                        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                        document.cookie = name + '=;' +
+                            'expires=Thu, 01-Jan-1970 00:00:01 GMT;' +
+                            'path=' + '/;' +
+                            'domain=' + azrihasin.github.io + ';' +
+                            'secure=;';
+                    }
+                  }
 
                 function getCookiesAll() {
                     console.log("Get through this function");
@@ -407,7 +465,6 @@
                     }
                     return cookies;
                 }
-
 
                 function createCookie(name, value) {
                     var expires;
@@ -422,17 +479,6 @@
                     document.cookie = name + "=" + value + expires + "; path=/";
                 }
 
-
-                /*  function getArrayCookies(){
-                alert("hello");
-               var json_str = getCookie('subject');
-               console.log(json_str);
-               var arr = JSON.parse(json_str);
-               alert("hello");
-               console.log(arr);
-               console.log("size"+( roughObjSize = JSON.stringify(bigObject).length));
-            }*/
-
                 function getCookie(c_name) {
                     if (document.cookie.length > 0) {
                         c_start = document.cookie.indexOf(c_name + "=");
@@ -446,7 +492,7 @@
                         }
                     }
                     return "";
-                }
+                }*/
             </script>
         </body>
         <!-- MAIN JS -->

@@ -1687,36 +1687,3 @@ function resetStudyPlan() {
 }
 
 
-function cookieManagement() {
-  deleteAllCookies();
-  
-  for (var i = 0; i < window.subject.length; i++) {
-      var json_str = JSON.stringify(window.subject[i]);
-
-      createCookie("table" + i, json_str);
-      console.log("size" + (
-          roughObjSize = JSON.stringify(json_str).length
-      ));
-
-
-  }
-
-  // Read cookie that have been created
-  var valueCookies = getCookiesAll();
-
-console.log("Cookies Saved");
-}
-
-function deleteAllCookies() {
-  var cookies = document.cookie.split(";");
-  for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i];
-      var eqPos = cookie.indexOf("=");
-      var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-      document.cookie = name + '=;' +
-          'expires=Thu, 01-Jan-1970 00:00:01 GMT;' +
-          'path=' + '/;' +
-          'domain=' + azrihasin.github.io + ';' +
-          'secure=;';
-  }
-}
