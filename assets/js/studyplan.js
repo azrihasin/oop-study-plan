@@ -66,6 +66,9 @@ function addSem() {
     subject.push([]);
   }
 
+  console.log("Sem length:" + sem.length);
+  console.log("Subject length:" + subject.length);
+  // console.log(sem[length].sem_name);
 
   //CREATE ELEMENT
   var tablespace = document.createElement("DIV");
@@ -222,7 +225,7 @@ function addSem() {
   element.insertBefore(tablespace, referenceNode);
 
   var classlength = document.getElementsByClassName("card").length;
- 
+  console.log("class length " + classlength);
 
   var upgreadedEditBtn = document.getElementById(editButtonId);
   componentHandler.upgradeElement(upgreadedEditBtn);
@@ -262,7 +265,7 @@ function getValue() {
 
     for (i = 0; i < window.sem.length; i++) {
       if (window.sem[i].sem_id == window.currentTable) {
-      
+        console.log(window.currentTable);
         index = i;
       }
     }
@@ -271,9 +274,11 @@ function getValue() {
 
     var tableId = "table" + currentTableId;
 
+    console.log("Current table id : " + tableId);
 
     var table = document.getElementById(tableId);
 
+    console.log("ROW TO BECOME ID" + table.tBodies[0].rows.length);
 
     var rowCount = 0;
 
@@ -355,6 +360,8 @@ function changeState(getid) {
   current_state = !current_state; // switch
   document.getElementById(getid).value = states[current_state ? 1 : 0]; // write your state
 
+  console.log(current_state);
+
   if (current_state == 1) {
     var fields = getid.split("_");
     var name = fields[0];
@@ -382,6 +389,8 @@ function changeState(getid) {
     var editButtonIcon = "editbuttonicon_" + getIndex;
 
     var edit = document.getElementById(editButtonIcon);
+
+    console.log(edit);
 
     edit.textContent = "done";
   } else {
@@ -414,17 +423,19 @@ function changeState(getid) {
     var edit = document.getElementById(editButtonIcon);
     edit.textContent = "edit";
 
-    
+    console.log(getTable.value);
 
     window.sem[num].sem_name = getTable.value;
 
-
+    console.log(window.sem[num]);
 
     for (i = 0; i < window.subject[num].length; i++) {
       window.subject[num][i].sem_name = getTable.value;
 
-    
+      // console.log(window.subject[getid][i].sem_name);
     }
+
+    console.log("Sem name" + window.sem[num].sem_name);
 
     var opts = document.getElementById("semoption").options;
     for (var i = 0; i < opts.length; i++) {
@@ -445,7 +456,7 @@ function editsubject(geteditid) {
   setOptionToCurrent();
   openFAB();
 
-
+  console.log("GetEditId: " + geteditid);
 
   var editElement = document.getElementById(geteditid);
 
@@ -467,6 +478,14 @@ function editsubject(geteditid) {
       num = i;
     }
   }
+
+  console.log("Get index " + getIndex);
+  console.log(fields);
+  console.log(semnum);
+  console.log("Length " + window.subject[semnum].length);
+  console.log(num);
+  console.log("See subject :" + window.subject[semnum][num].course);
+  console.log(window.subject[semnum]);
 
   for (i = 0; i < 3; i++) {
     if (i == 0) {
@@ -509,6 +528,9 @@ function deletesubject(geteditid) {
     }
   }
 
+  console.log(fields);
+  console.log(semnum);
+
   for (i = 0; i < window.subject[semnum].length; i++) {
     if (window.subject[semnum][i].course_id == getIndex) {
       num = i;
@@ -517,6 +539,7 @@ function deletesubject(geteditid) {
 
   var getDeleteTable = "table" + getTableIndex;
 
+  console.log("Table to delete : " + getDeleteTable);
 
   var deleteTable = document.getElementById(getDeleteTable).tBodies[0];
 
@@ -528,7 +551,7 @@ function deletesubject(geteditid) {
     var one = fields[0];
     var theIdRow = fields[1];
 
-
+    console.log("Delete row : " + theIdRow);
 
     if (theIdRow == window.subject[semnum][num].course_id) {
       deleteTable.deleteRow(i);
@@ -1124,6 +1147,7 @@ function buildSem(gettableId,gettablename, index) {
   element.insertBefore(tablespace, referenceNode);
 
   var classlength = document.getElementsByClassName("card").length;
+  console.log("class length " + classlength);
 
   var upgreadedEditBtn = document.getElementById(editButtonId);
   componentHandler.upgradeElement(upgreadedEditBtn);
@@ -1146,7 +1170,10 @@ function buildSubject(course_id, course, course_code, credit_hour, tableIndex) {
   console.log("Table Id:" + tableId);
 
   for (i = 0; i < window.sem.length; i++) {
-
+    console.log("lOOPING COUNT" + i);
+    console.log("lOOPING LENGTH" + window.sem.length);
+    console.log("Sem id " + window.sem[i].sem_id);
+    console.log("Sem id in array" + tableIndex);
 
     if (window.sem[i].sem_id == tableIndex) {
       var index = i;
