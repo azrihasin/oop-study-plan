@@ -1679,6 +1679,8 @@ $(document).ready(function () {
 
       console.log(data[i].length);
 
+      //Local storage to array subject
+
       if (data[i].length > 0) {
         for (var j = 0; j < data[i].length; j++) {
           var s_id = data[i][j].sem_id;
@@ -1698,10 +1700,9 @@ $(document).ready(function () {
       }
     }
 
-    console.log(window.subject[0][0].sem_id);
+    //Local storage to array sem
 
     for (var j = 0; j < window.subject.length; j++) {
-
       if (window.subject[j].length > 0) {
         console.log(window.subject.length);
 
@@ -1709,14 +1710,70 @@ $(document).ready(function () {
         var name = window.subject[j][0].sem_name;
         window.sem.push(new Sem(id, name));
       }
-      
     }
 
     console.log(window.subject);
 
     generateAllBuild();
+
+    cookieProgressBar();
   }
 });
+
+function cookieProgressBar() {
+  console.log("get thorugh progress bar");
+
+  //set checkbox to true every sem
+
+  for (var i = 0; i < window.subject.length; i++) {
+    var dontTick = "true";
+
+    var value = "checkboxall_" + window.subject[i][0].sem_id;
+
+    for (var j = 0; j < window.subject[i].length; j++) {
+      
+      if (window.subject[i][j].taken == "false") {
+        console.log("this subject flase " + window.subject[i][j].course);
+        dontTick = "false";
+      }
+    }
+
+    console.log("Dont tick value " + dontTick);
+
+    if (dontTick == "false") {
+      console.log("this table false " + window.subject[i][0].sem_name);
+      document.getElementById(value).checked = false;
+    } else if (dontTick == "true") {
+      console.log("this table true " + window.subject[i][0].sem_name);
+      document.getElementById(value).checked = true;
+    }
+  }
+
+   //set checkbox to true every subject
+
+   for (var i = 0; i < window.subject.length; i++) {
+
+    for (var j = 0; j < window.subject[i].length; j++) {
+
+        var value = "check_" + window.subject[i][j].sem_id + "_" + window.subject[i][j].course_id;
+
+        if (window.subject[i][j].taken == "true") {
+            document.getElementById(value).checked = true;
+
+            var table = document.getElementById("table" + window.subject[i][j].sem_id);
+
+            var content = table.getElementsByTagName("tbody")[0];
+
+            for (var x = 0; x < content.rows.length; x++) {
+                if (x == j) {
+                    content.rows[x].style.backgroundColor = "#dddddd";
+                }
+            }
+        }
+    }
+
+}
+}
 
 function cookieManagement() {
   window.localStorage.setItem("subject", JSON.stringify(window.subject));
