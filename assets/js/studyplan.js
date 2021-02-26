@@ -66,9 +66,6 @@ function addSem() {
     subject.push([]);
   }
 
-  console.log("Sem length:" + sem.length);
-  console.log("Subject length:" + subject.length);
-  // console.log(sem[length].sem_name);
 
   //CREATE ELEMENT
   var tablespace = document.createElement("DIV");
@@ -225,7 +222,7 @@ function addSem() {
   element.insertBefore(tablespace, referenceNode);
 
   var classlength = document.getElementsByClassName("card").length;
-  console.log("class length " + classlength);
+ 
 
   var upgreadedEditBtn = document.getElementById(editButtonId);
   componentHandler.upgradeElement(upgreadedEditBtn);
@@ -265,7 +262,7 @@ function getValue() {
 
     for (i = 0; i < window.sem.length; i++) {
       if (window.sem[i].sem_id == window.currentTable) {
-        console.log(window.currentTable);
+      
         index = i;
       }
     }
@@ -274,11 +271,9 @@ function getValue() {
 
     var tableId = "table" + currentTableId;
 
-    console.log("Current table id : " + tableId);
 
     var table = document.getElementById(tableId);
 
-    console.log("ROW TO BECOME ID" + table.tBodies[0].rows.length);
 
     var rowCount = 0;
 
@@ -360,8 +355,6 @@ function changeState(getid) {
   current_state = !current_state; // switch
   document.getElementById(getid).value = states[current_state ? 1 : 0]; // write your state
 
-  console.log(current_state);
-
   if (current_state == 1) {
     var fields = getid.split("_");
     var name = fields[0];
@@ -389,8 +382,6 @@ function changeState(getid) {
     var editButtonIcon = "editbuttonicon_" + getIndex;
 
     var edit = document.getElementById(editButtonIcon);
-
-    console.log(edit);
 
     edit.textContent = "done";
   } else {
@@ -423,19 +414,17 @@ function changeState(getid) {
     var edit = document.getElementById(editButtonIcon);
     edit.textContent = "edit";
 
-    console.log(getTable.value);
+    
 
     window.sem[num].sem_name = getTable.value;
 
-    console.log(window.sem[num]);
+
 
     for (i = 0; i < window.subject[num].length; i++) {
       window.subject[num][i].sem_name = getTable.value;
 
-      // console.log(window.subject[getid][i].sem_name);
+    
     }
-
-    console.log("Sem name" + window.sem[num].sem_name);
 
     var opts = document.getElementById("semoption").options;
     for (var i = 0; i < opts.length; i++) {
@@ -456,7 +445,7 @@ function editsubject(geteditid) {
   setOptionToCurrent();
   openFAB();
 
-  console.log("GetEditId: " + geteditid);
+
 
   var editElement = document.getElementById(geteditid);
 
@@ -478,14 +467,6 @@ function editsubject(geteditid) {
       num = i;
     }
   }
-
-  console.log("Get index " + getIndex);
-  console.log(fields);
-  console.log(semnum);
-  console.log("Length " + window.subject[semnum].length);
-  console.log(num);
-  console.log("See subject :" + window.subject[semnum][num].course);
-  console.log(window.subject[semnum]);
 
   for (i = 0; i < 3; i++) {
     if (i == 0) {
@@ -528,9 +509,6 @@ function deletesubject(geteditid) {
     }
   }
 
-  console.log(fields);
-  console.log(semnum);
-
   for (i = 0; i < window.subject[semnum].length; i++) {
     if (window.subject[semnum][i].course_id == getIndex) {
       num = i;
@@ -539,7 +517,6 @@ function deletesubject(geteditid) {
 
   var getDeleteTable = "table" + getTableIndex;
 
-  console.log("Table to delete : " + getDeleteTable);
 
   var deleteTable = document.getElementById(getDeleteTable).tBodies[0];
 
@@ -551,7 +528,6 @@ function deletesubject(geteditid) {
     var one = fields[0];
     var theIdRow = fields[1];
 
-    console.log("Delete row : " + theIdRow);
 
     if (theIdRow == window.subject[semnum][num].course_id) {
       deleteTable.deleteRow(i);
@@ -594,14 +570,7 @@ function doneeditsubject(geteditid) {
 
   var option_sem = document.getElementById("semoption").value;
 
-  console.log(course);
-  console.log(course_code);
-  console.log(credit_hour);
 
-  console.log(semnum);
-  console.log(num);
-
-  console.log(window.subject[semnum][num].course);
 
   window.subject[semnum][num].course = course.toString();
   window.subject[semnum][num].course_code = course_code.toString();
@@ -672,7 +641,6 @@ function doneeditsubject(geteditid) {
 
     var getDeleteTable = "table" + getTableIndex;
 
-    console.log("Table to delete : " + getDeleteTable);
 
     var deleteTable = document.getElementById(getDeleteTable).tBodies[0];
 
@@ -684,7 +652,7 @@ function doneeditsubject(geteditid) {
       var one = fields[0];
       var theIdRow = fields[1];
 
-      console.log("Delete row : " + theIdRow);
+      
 
       if (theIdRow == window.subject[semnum][num].course_id) {
         deleteTable.deleteRow(i);
@@ -711,7 +679,8 @@ function doneeditsubject(geteditid) {
 
     window.currentTable = getCurrentTable;
 
-    console.log("MOVE CURRENT TABLE ID" + window.currentTable);
+
+    
 
     getValue();
   }
@@ -738,7 +707,7 @@ function deleteSem(value) {
 
     for (i = 0; i < window.sem.length; i++) {
       if (window.sem[i].sem_id == tableIndex) {
-        console.log(tableIndex);
+    
         index = i;
       }
     }
@@ -750,7 +719,7 @@ function deleteSem(value) {
 
     window.sem.splice(index, 1);
 
-    console.log(window.sem);
+
 
     //DELETE SPLICE ALL THE ELEMENT IN ARRAY
     for (j = 0; j < window.subject[index].length; j++) {
@@ -759,7 +728,7 @@ function deleteSem(value) {
 
     window.subject.splice(index, 1);
 
-    console.log(window.subject);
+  
 
    
   }
@@ -812,8 +781,7 @@ function Upload() {
           generateArray(csvData);
           generateAllBuild() ;
 
-          console.log(window.sem);
-          console.log(window.subject);
+     
      
         }
 
@@ -897,9 +865,7 @@ function generateArray(csvData) {
 
   for (i = 0; i < getSem.length; i++) {
  
-    console.log("Sem id"+getSem[i]);
-    console.log("Sem name length: " + semName.length);
-    console.log("Sem name: " + semName[i]);
+
     if (getSem.length == 0) {
       window.sem[0] = new Sem(getSem[i], semName[i]);
     } else {
@@ -946,7 +912,7 @@ function generateArray(csvData) {
         
     }
 
-    console.log("DATA LENGTH : "+window.subject.length);
+
 
    
 
@@ -1394,7 +1360,7 @@ function openModalAddSubject(tableId) {
 
   setOptionToCurrent();
 
-  console.log("Debug id:" + window.currentTable);
+
 
   // function cancelDropDown(ev) {
   //   ev.preventDefault();
