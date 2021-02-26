@@ -1147,7 +1147,6 @@ function buildSem(gettableId,gettablename, index) {
   element.insertBefore(tablespace, referenceNode);
 
   var classlength = document.getElementsByClassName("card").length;
-  console.log("class length " + classlength);
 
   var upgreadedEditBtn = document.getElementById(editButtonId);
   componentHandler.upgradeElement(upgreadedEditBtn);
@@ -1170,10 +1169,7 @@ function buildSubject(course_id, course, course_code, credit_hour, tableIndex) {
   console.log("Table Id:" + tableId);
 
   for (i = 0; i < window.sem.length; i++) {
-    console.log("lOOPING COUNT" + i);
-    console.log("lOOPING LENGTH" + window.sem.length);
-    console.log("Sem id " + window.sem[i].sem_id);
-    console.log("Sem id in array" + tableIndex);
+
 
     if (window.sem[i].sem_id == tableIndex) {
       var index = i;
