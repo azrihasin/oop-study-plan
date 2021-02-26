@@ -261,7 +261,7 @@
                         for (var i = 0, len = keys.length; i < len; i++) {
                             console.log(valueCookies[keys[i]]);
                             var name = "table" + i;
-                            console.log("Table name" + name);
+                            console.log("Table name : " + name);
                             doSomething(name);
 
                         }
@@ -346,7 +346,6 @@
 
                     var myCookie = getCookie(name);
 
-
                     // do cookie exists stuff
                     var arr = JSON.parse(myCookie);
 
@@ -358,6 +357,7 @@
 
                     // push to array
                     window.subject.push(arr);
+                    console.log(arr);
                 }
 
                 function cookieCsv(cookievalue) {
@@ -365,7 +365,7 @@
 
                     var rowcount = 0;
 
-                    console.log("Debug cookie"+window.subject);
+                    
 
                     for (i = 0; i < window.subject.length; i ++) {
                         for (j = 0; j < window.subject[i].length; j ++) {
@@ -384,6 +384,8 @@
                             rowcount = rowcount + 1;
                         }
                     }
+
+                    console.log("Debug cookie"+data);
 
                     var csv = "sem_id,sem_name,course_id,course,course_code,credit_hour,taken\n";
                     data.forEach(function (row) {
