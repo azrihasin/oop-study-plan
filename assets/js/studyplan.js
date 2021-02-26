@@ -35,8 +35,6 @@ var currentTable = 0;
 
 sem = [];
 subject = [];
-console.log(sem.length);
-console.log(subject.length);
 
 // document.getElementById("check").onclick = function () {
 //   console.log(window.sem);
@@ -65,7 +63,6 @@ function addSem() {
   } else {
     subject.push([]);
   }
-
 
   //CREATE ELEMENT
   var tablespace = document.createElement("DIV");
@@ -222,7 +219,6 @@ function addSem() {
   element.insertBefore(tablespace, referenceNode);
 
   var classlength = document.getElementsByClassName("card").length;
- 
 
   var upgreadedEditBtn = document.getElementById(editButtonId);
   componentHandler.upgradeElement(upgreadedEditBtn);
@@ -262,7 +258,6 @@ function getValue() {
 
     for (i = 0; i < window.sem.length; i++) {
       if (window.sem[i].sem_id == window.currentTable) {
-      
         index = i;
       }
     }
@@ -271,9 +266,7 @@ function getValue() {
 
     var tableId = "table" + currentTableId;
 
-
     var table = document.getElementById(tableId);
-
 
     var rowCount = 0;
 
@@ -414,16 +407,10 @@ function changeState(getid) {
     var edit = document.getElementById(editButtonIcon);
     edit.textContent = "edit";
 
-    
-
     window.sem[num].sem_name = getTable.value;
-
-
 
     for (i = 0; i < window.subject[num].length; i++) {
       window.subject[num][i].sem_name = getTable.value;
-
-    
     }
 
     var opts = document.getElementById("semoption").options;
@@ -444,8 +431,6 @@ function editsubject(geteditid) {
   document.getElementById("semoption").removeAttribute("disabled");
   setOptionToCurrent();
   openFAB();
-
-
 
   var editElement = document.getElementById(geteditid);
 
@@ -517,7 +502,6 @@ function deletesubject(geteditid) {
 
   var getDeleteTable = "table" + getTableIndex;
 
-
   var deleteTable = document.getElementById(getDeleteTable).tBodies[0];
 
   for (var i = 0; i < deleteTable.rows.length; i++) {
@@ -527,7 +511,6 @@ function deletesubject(geteditid) {
     var fields = cellVal.split("_");
     var one = fields[0];
     var theIdRow = fields[1];
-
 
     if (theIdRow == window.subject[semnum][num].course_id) {
       deleteTable.deleteRow(i);
@@ -541,8 +524,6 @@ function deletesubject(geteditid) {
 }
 
 function doneeditsubject(geteditid) {
-  console.log(geteditid);
-
   var fields = geteditid.split("_");
   var name = fields[0];
   var getTableIndex = fields[1];
@@ -570,8 +551,6 @@ function doneeditsubject(geteditid) {
 
   var option_sem = document.getElementById("semoption").value;
 
-
-
   window.subject[semnum][num].course = course.toString();
   window.subject[semnum][num].course_code = course_code.toString();
   window.subject[semnum][num].credit_hour = credit_hour.toString();
@@ -588,7 +567,6 @@ function doneeditsubject(geteditid) {
 
   var getRow = parseInt(num) + parseInt(1);
 
-  console.log(getRow);
   var trs = as.getElementsByTagName("tr")[getRow];
 
   trs.innerHTML = `
@@ -635,12 +613,10 @@ function doneeditsubject(geteditid) {
   var getTableNum = 0;
 
   if (sel.options[sel.selectedIndex].text == window.sem[semnum].sem_name) {
-    console.log(" The subject is same with the option");
   } else {
     //DELETING ROW THAT EXIST IN TABLE BEFORE
 
     var getDeleteTable = "table" + getTableIndex;
-
 
     var deleteTable = document.getElementById(getDeleteTable).tBodies[0];
 
@@ -651,8 +627,6 @@ function doneeditsubject(geteditid) {
       var fields = cellVal.split("_");
       var one = fields[0];
       var theIdRow = fields[1];
-
-      
 
       if (theIdRow == window.subject[semnum][num].course_id) {
         deleteTable.deleteRow(i);
@@ -679,9 +653,6 @@ function doneeditsubject(geteditid) {
 
     window.currentTable = getCurrentTable;
 
-
-    
-
     getValue();
   }
   progressBar();
@@ -707,7 +678,6 @@ function deleteSem(value) {
 
     for (i = 0; i < window.sem.length; i++) {
       if (window.sem[i].sem_id == tableIndex) {
-    
         index = i;
       }
     }
@@ -719,18 +689,12 @@ function deleteSem(value) {
 
     window.sem.splice(index, 1);
 
-
-
     //DELETE SPLICE ALL THE ELEMENT IN ARRAY
     for (j = 0; j < window.subject[index].length; j++) {
       window.subject[index].splice(j, 1);
     }
 
     window.subject.splice(index, 1);
-
-  
-
-   
   }
 }
 
@@ -779,13 +743,8 @@ function Upload() {
 
           //Put here
           generateArray(csvData);
-          generateAllBuild() ;
-
-     
-     
+          generateAllBuild();
         }
-
-       
       };
       reader.readAsText(fileUpload.files[0]);
     } else {
@@ -801,8 +760,6 @@ function Upload() {
 function generateArray(csvData) {
   //CSV DATA TO ARRAY AND CHECK HOW MANY SEM
   var newarray = csvData.map(function (value, index) {
-    console.log("Csv data" + csvData[index][0]);
-
     var reg = /^[0-9]*[.]?[0-9]*$/;
 
     return csvData[index][0];
@@ -827,8 +784,6 @@ function generateArray(csvData) {
 
   getSem = [...new Set(data)];
 
-  console.log("Sem length :" + getSem.length);
-
   //REMOVE ALL ELEMENT
 
   for (var i = 0; i < window.sem.length; i++) {
@@ -846,15 +801,11 @@ function generateArray(csvData) {
 
   //Building Table
 
-  console.log("Get sem " + getSem);
-
   //Build array for every sem
 
   var semName = [];
 
   for (i = 0; i < getSem.length; i++) {
-    console.log("Just for checking:" + getSem[i]);
-
     for (var j = 0; j < csvData.length; j++) {
       if (getSem[i] == csvData[j][0]) {
         semName.push(csvData[j][1]);
@@ -864,14 +815,12 @@ function generateArray(csvData) {
   }
 
   for (i = 0; i < getSem.length; i++) {
- 
-
     if (getSem.length == 0) {
       window.sem[0] = new Sem(getSem[i], semName[i]);
     } else {
       window.sem.push(new Sem(getSem[i], semName[i]));
-    } 
-    
+    }
+
     if (getSem.length == 0) {
       window.subject[0] = [];
     } else {
@@ -879,57 +828,39 @@ function generateArray(csvData) {
     }
   }
 
-  const arrFiltered = csvData.filter(el => {
-    return el != null && el != '';
+  const arrFiltered = csvData.filter((el) => {
+    return el != null && el != "";
   });
 
-  
+  for (j = 0; j < csvData.length; j++) {
+    var s_id = csvData[j][0];
+    var s_name = csvData[j][1];
+    var c_id = csvData[j][2];
+    var c_name = csvData[j][3];
+    var c_code = csvData[j][4];
+    var c_hour = csvData[j][5];
+    var taken = csvData[j][6];
 
-   for (j = 0; j < csvData.length; j++) {
-      
-        var s_id = csvData[j][0];
-        var s_name = csvData[j][1];
-        var c_id = csvData[j][2];
-        var c_name = csvData[j][3];
-        var c_code = csvData[j][4];
-        var c_hour = csvData[j][5];
-        var taken = csvData[j][6];
+    var findIndex;
 
-       
-
-        var findIndex;
-
-        for(var x = 0;x<window.sem.length;x++){
-          if(csvData[j][0]==window.sem[x].sem_id){
-            findIndex = x;
-            break;
-          }         
-        }
-        
-        window.subject[findIndex].push(
-          new Subject(s_id, s_name, c_id, c_name, c_code, c_hour, taken)
-        );
-        
+    for (var x = 0; x < window.sem.length; x++) {
+      if (csvData[j][0] == window.sem[x].sem_id) {
+        findIndex = x;
+        break;
+      }
     }
 
-
-
-   
-
-   
-
-    
+    window.subject[findIndex].push(
+      new Subject(s_id, s_name, c_id, c_name, c_code, c_hour, taken)
+    );
+  }
 }
 
 function generateAllBuild() {
+  for (var i = 0; i < window.sem.length; i++) {
+    buildSem(window.sem[i].sem_id, window.sem[i].sem_name, i);
 
-
-  for(var i = 0;i<window.sem.length;i++){
-
-    buildSem(window.sem[i].sem_id,window.sem[i].sem_name ,i);
-
-    for(var j = 0;j<window.subject[i].length;j++){
-
+    for (var j = 0; j < window.subject[i].length; j++) {
       var s_id = window.subject[i][j].sem_id;
       var s_name = window.subject[i][j].sem_name;
       var c_id = window.subject[i][j].course_id;
@@ -939,19 +870,11 @@ function generateAllBuild() {
       var taken = window.subject[i][j].taken;
 
       buildSubject(c_id, c_name, c_code, c_hour, s_id);
-
     }
   }
-
-        
-
-     
-
-          
-     
 }
 
-function buildSem(gettableId,gettablename, index) {
+function buildSem(gettableId, gettablename, index) {
   //INDEX OF TABLE
   let length = index;
   let tableId = gettableId;
@@ -1130,21 +1053,12 @@ function buildSem(gettableId,gettablename, index) {
 function buildSubject(course_id, course, course_code, credit_hour, tableIndex) {
   //CREATE ALL VARIABLES
 
-  var tableId = "table" + tableIndex;
-
-  console.log("Table Id:" + tableId);
-
   for (i = 0; i < window.sem.length; i++) {
-
-
     if (window.sem[i].sem_id == tableIndex) {
       var index = i;
     } else {
-      console.log("Not find table");
     }
   }
-
-  console.log("Index of table " + index);
 
   var table = document.getElementById(tableId);
 
@@ -1352,15 +1266,13 @@ function mulcancel() {
 function openModalAddSubject(tableId) {
   window.currentTable = tableId;
 
-  document.getElementById("coursenameinput").value="";
+  document.getElementById("coursenameinput").value = "";
 
-  document.getElementById("coursecodeinput").value="";
+  document.getElementById("coursecodeinput").value = "";
 
-  document.getElementById("credithourinput").value="";
+  document.getElementById("credithourinput").value = "";
 
   setOptionToCurrent();
-
-
 
   // function cancelDropDown(ev) {
   //   ev.preventDefault();
@@ -1397,9 +1309,7 @@ function setOptionToCurrent() {
     if (window.currentTable == window.sem[i].sem_id) {
       var getName = window.sem[i].sem_name;
       var val = i;
-      console.log("Option index" + i);
     } else {
-      console.log("Not find");
     }
   }
 
@@ -1433,13 +1343,11 @@ function changeCheckboxForAll(value) {
 
     var table = document.getElementById("table" + getTableIndex);
 
-
-
     var content = table.getElementsByTagName("tbody")[0];
 
     for (var i = 0; i < content.rows.length; i++) {
       content.rows[i].style.backgroundColor = "#dddddd";
-      
+
       window.subject[semnum][i].taken = "true";
 
       //SET THE CHECKBOX TO TRUE
@@ -1477,8 +1385,6 @@ function changeCheckboxForAll(value) {
       var getTheId = window.subject[semnum][i].course_id;
 
       var checkBoxId = "check_" + getTableId + "_" + getTheId;
-
-      console.log("Check box id" + checkBoxId);
 
       var getCheckBox = document.getElementById(checkBoxId);
 
@@ -1565,10 +1471,6 @@ function calculateTotalCredit(semnum) {
   );
 
   totalCreditHourArea.innerHTML = totalCredit.toString();
-
-  console.log("text" + totalCredit.toString);
-  console.log(totalCreditHourArea);
-  console.log("Total credit :" + totalCredit);
 }
 
 function calculateTotalCreditTaken(semnum) {
@@ -1588,8 +1490,6 @@ function calculateTotalCreditTaken(semnum) {
   );
 
   totalCreditHourArea.innerHTML = totalCredit.toString();
-
-  console.log("Total credit taken :" + totalCredit);
 }
 
 function progressBar() {
@@ -1611,9 +1511,6 @@ function progressBar() {
   }
 
   var progress = (totalChTaken / totalCh) * 100;
-
-  console.log(totalCh);
-  console.log(totalChTaken);
 
   document.getElementById("calculateprogress").innerHTML =
     String(totalChTaken) + "/" + String(totalCh);
