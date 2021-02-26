@@ -760,8 +760,6 @@ function deleteSem(value) {
     window.subject.splice(index, 1);
 
     console.log(window.subject);
-
-   
   }
 }
 
@@ -810,14 +808,11 @@ function Upload() {
 
           //Put here
           generateArray(csvData);
-          generateAllBuild() ;
+          generateAllBuild();
 
           console.log(window.sem);
           console.log(window.subject);
-     
         }
-
-       
       };
       reader.readAsText(fileUpload.files[0]);
     } else {
@@ -896,16 +891,15 @@ function generateArray(csvData) {
   }
 
   for (i = 0; i < getSem.length; i++) {
- 
-    console.log("Sem id"+getSem[i]);
+    console.log("Sem id" + getSem[i]);
     console.log("Sem name length: " + semName.length);
     console.log("Sem name: " + semName[i]);
     if (getSem.length == 0) {
       window.sem[0] = new Sem(getSem[i], semName[i]);
     } else {
       window.sem.push(new Sem(getSem[i], semName[i]));
-    } 
-    
+    }
+
     if (getSem.length == 0) {
       window.subject[0] = [];
     } else {
@@ -913,57 +907,45 @@ function generateArray(csvData) {
     }
   }
 
-  const arrFiltered = csvData.filter(el => {
-    return el != null && el != '';
+  const arrFiltered = csvData.filter((el) => {
+    return el != null && el != "";
   });
 
-  
+  for (j = 0; j < csvData.length; j++) {
+    var s_id = csvData[j][0];
+    var s_name = csvData[j][1];
+    var c_id = csvData[j][2];
+    var c_name = csvData[j][3];
+    var c_code = csvData[j][4];
+    var c_hour = csvData[j][5];
+    var taken = csvData[j][6];
 
-   for (j = 0; j < csvData.length; j++) {
-      
-        var s_id = csvData[j][0];
-        var s_name = csvData[j][1];
-        var c_id = csvData[j][2];
-        var c_name = csvData[j][3];
-        var c_code = csvData[j][4];
-        var c_hour = csvData[j][5];
-        var taken = csvData[j][6];
+    var findIndex;
 
-       
-
-        var findIndex;
-
-        for(var x = 0;x<window.sem.length;x++){
-          if(csvData[j][0]==window.sem[x].sem_id){
-            findIndex = x;
-            break;
-          }         
-        }
-        
-        window.subject[findIndex].push(
-          new Subject(s_id, s_name, c_id, c_name, c_code, c_hour, taken)
-        );
-        
+    for (var x = 0; x < window.sem.length; x++) {
+      if (csvData[j][0] == window.sem[x].sem_id) {
+        findIndex = x;
+        break;
+      }
     }
 
-    console.log("DATA LENGTH : "+window.subject.length);
+    window.subject[findIndex].push(
+      new Subject(s_id, s_name, c_id, c_name, c_code, c_hour, taken)
+    );
+  }
 
-   
-
-   
-
-    
+  console.log("DATA LENGTH : " + window.subject.length);
 }
 
 function generateAllBuild() {
+  console.log("run through build");
 
+  for (var i = 0; i < window.sem.length; i++) {
+    console.log("run here");
 
-  for(var i = 0;i<window.sem.length;i++){
+    buildSem(window.sem[i].sem_id, window.sem[i].sem_name, i);
 
-    buildSem(window.sem[i].sem_id,window.sem[i].sem_name ,i);
-
-    for(var j = 0;j<window.subject[i].length;j++){
-
+    for (var j = 0; j < window.subject[i].length; j++) {
       var s_id = window.subject[i][j].sem_id;
       var s_name = window.subject[i][j].sem_name;
       var c_id = window.subject[i][j].course_id;
@@ -973,19 +955,11 @@ function generateAllBuild() {
       var taken = window.subject[i][j].taken;
 
       buildSubject(c_id, c_name, c_code, c_hour, s_id);
-
     }
   }
-
-        
-
-     
-
-          
-     
 }
 
-function buildSem(gettableId,gettablename, index) {
+function buildSem(gettableId, gettablename, index) {
   //INDEX OF TABLE
   let length = index;
   let tableId = gettableId;
@@ -1390,11 +1364,11 @@ function mulcancel() {
 function openModalAddSubject(tableId) {
   window.currentTable = tableId;
 
-  document.getElementById("coursenameinput").value="";
+  document.getElementById("coursenameinput").value = "";
 
-  document.getElementById("coursecodeinput").value="";
+  document.getElementById("coursecodeinput").value = "";
 
-  document.getElementById("credithourinput").value="";
+  document.getElementById("credithourinput").value = "";
 
   setOptionToCurrent();
 
@@ -1471,13 +1445,11 @@ function changeCheckboxForAll(value) {
 
     var table = document.getElementById("table" + getTableIndex);
 
-
-
     var content = table.getElementsByTagName("tbody")[0];
 
     for (var i = 0; i < content.rows.length; i++) {
       content.rows[i].style.backgroundColor = "#dddddd";
-      
+
       window.subject[semnum][i].taken = "true";
 
       //SET THE CHECKBOX TO TRUE
@@ -1686,4 +1658,68 @@ function resetStudyPlan() {
   }
 }
 
+$(document).ready(function () {
+  var data = JSON.parse(localStorage.getItem("subject"));
 
+  // console.log("debug local storage:"+ data);
+
+  if (data.length > 0) {
+    console.log("Get through local storage");
+
+    var keys = Object.keys(data);
+
+    var hold = [];
+
+    for (var i = 0, len = keys.length; i < len; i++) {
+      window.subject.push([]);
+    }
+
+    for (var i = 0, len = keys.length; i < len; i++) {
+      console.log(data[0][0].course);
+
+      console.log(data[i].length);
+
+      if (data[i].length > 0) {
+        for (var j = 0; j < data[i].length; j++) {
+          var s_id = data[i][j].sem_id;
+          var s_name = data[i][j].sem_name;
+          var c_id = data[i][j].course_id;
+          var c_name = data[i][j].course;
+          var c_code = data[i][j].course_code;
+          var c_hour = data[i][j].credit_hour;
+          var taken = data[i][j].taken;
+
+          window.subject[i].push(
+            new Subject(s_id, s_name, c_id, c_name, c_code, c_hour, taken)
+          );
+
+          console.log("good");
+        }
+      }
+    }
+
+    console.log(window.subject[0][0].sem_id);
+
+    for (var j = 0; j < window.subject.length; j++) {
+
+      if (window.subject[j].length > 0) {
+        console.log(window.subject.length);
+
+        var id = window.subject[j][0].sem_id;
+        var name = window.subject[j][0].sem_name;
+        window.sem.push(new Sem(id, name));
+      }
+      
+    }
+
+    console.log(window.subject);
+
+    generateAllBuild();
+  }
+});
+
+function cookieManagement() {
+  window.localStorage.setItem("subject", JSON.stringify(window.subject));
+
+  console.log("Local storage Saved");
+}

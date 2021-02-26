@@ -241,31 +241,8 @@
                 });
 
 
-                sem = [];
-                subject = [];
 
-                $(document).ready(function () {
-
-
-                    var data = JSON.parse(localStorage.getItem("subject"));
-
-                    data = window.subject;
-
-                    if (data.length > 0) {
-                        generateAllBuild();
-                    }
-
-
-                });
-
-                function cookieManagement() {
-
-                    localStorage.setItem("subject", JSON.stringify(window.subject));
-
-
-                    console.log("Local storage Saved");
-
-                };
+            
 
                 // cookies
 
