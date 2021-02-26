@@ -1685,3 +1685,24 @@ function resetStudyPlan() {
     cookieManagement();
   }
 }
+
+
+function cookieManagement() {
+  document.cookie ="";
+  
+  for (var i = 0; i < window.subject.length; i++) {
+      var json_str = JSON.stringify(window.subject[i]);
+
+      createCookie("table" + i, json_str);
+      console.log("size" + (
+          roughObjSize = JSON.stringify(json_str).length
+      ));
+
+
+  }
+
+  // Read cookie that have been created
+  var valueCookies = getCookiesAll();
+
+console.log("Cookies Saved");
+}

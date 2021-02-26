@@ -396,22 +396,6 @@
                     return csv;
                 }
 
-                function cookieManagement() {
-                    console.log("Cookies Saved");
-                    for (var i = 0; i < window.subject.length; i++) {
-                        var json_str = JSON.stringify(window.subject[i]);
-                 
-                        createCookie("table" + i, json_str);
-                        console.log("size" + (
-                            roughObjSize = JSON.stringify(json_str).length
-                        ));
-                    }
-
-                    // Read cookie that have been created
-                    var valueCookies = getCookiesAll();
-
-
-                }
 
                 function getCookiesAll() {
                     console.log("Get through this function");
